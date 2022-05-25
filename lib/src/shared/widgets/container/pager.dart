@@ -28,8 +28,8 @@ class PaginationPager extends StatelessWidget {
             },
             icon: const Icon(Icons.arrow_back_ios, size: size),
           ),
-          _buildPageWrapper(1),
           if (totalPage > 6) ...[
+            _buildPageWrapper(1),
             if (currentPage <= 4) ...[
               for (var i in [2, 3, 4, 5]) _buildPageWrapper(i),
               emptySpace,
@@ -46,6 +46,8 @@ class PaginationPager extends StatelessWidget {
               for (var i in [4, 3, 2, 1]) _buildPageWrapper(totalPage - i),
             ],
             _buildPageWrapper(totalPage),
+          ] else ...[
+            for (var i in [1, 2, 3, 4, 5, 6]) _buildPageWrapper(i),
           ],
           IconButton(
             onPressed: () {

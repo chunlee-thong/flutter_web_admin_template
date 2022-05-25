@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_admin_template/src/app/constant/app_theme_color.dart';
 import 'package:flutter_web_admin_template/src/app/provider/menu_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:sura_flutter/sura_flutter.dart';
@@ -20,7 +21,7 @@ class AdminTemplateApp extends StatelessWidget {
           platform: TargetPlatform.windows,
           visualDensity: VisualDensity.standard,
           colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: SuraColor.toMaterial(const Color.fromARGB(255, 96, 5, 182).value),
+            primarySwatch: SuraColor.toMaterial(AppColor.primary.value),
           ),
           appBarTheme: const AppBarTheme(
             elevation: 1.0,
