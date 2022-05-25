@@ -39,7 +39,8 @@ class SideMenuLayout extends StatelessWidget {
                     title: Text(menu.title),
                     onTap: () {
                       readProvider<MenuController>(context).menuIndex = index;
-                      if (SuraResponsive.screenWidth < 768) {
+                      infoLog(SuraResponsive.screenWidth);
+                      if (SuraResponsive.screenWidth <= 800) {
                         Navigator.pop(context);
                       }
                     },

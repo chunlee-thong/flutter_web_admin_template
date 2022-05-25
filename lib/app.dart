@@ -3,7 +3,7 @@ import 'package:flutter_web_admin_template/src/app/provider/menu_controller.dart
 import 'package:provider/provider.dart';
 import 'package:sura_flutter/sura_flutter.dart';
 
-import 'features/root/root_page.dart';
+import 'src/features/root/root_page.dart';
 
 class AdminTemplateApp extends StatelessWidget {
   const AdminTemplateApp({Key? key}) : super(key: key);

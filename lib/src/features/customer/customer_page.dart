@@ -5,6 +5,8 @@ import 'package:flutter_web_admin_template/src/shared/widgets/container/body_lay
 import 'package:sura_flutter/sura_flutter.dart';
 import 'package:sura_manager/sura_manager.dart';
 
+import '../../shared/widgets/container/pager.dart';
+
 class CustomerPage extends StatefulWidget {
   const CustomerPage({Key? key}) : super(key: key);
 
@@ -30,11 +32,6 @@ class _CustomerPageState extends State<CustomerPage> with AutomaticKeepAliveClie
         final list = response.data["data"] as List;
         infoLog("Fetch data on page: $page, data: ${list.length}");
         List<CustomerModel> newData = list.map((e) => CustomerModel.fromJson(e)).toList();
-        if (customerManager.hasData) {
-          if (customerManager.data!.length < total) {
-            newData = [...customerManager.data!, ...newData];
-          }
-        }
         return newData;
       },
       reloading: false,
@@ -60,42 +57,84 @@ class _CustomerPageState extends State<CustomerPage> with AutomaticKeepAliveClie
       child: FutureManagerBuilder<List<CustomerModel>>(
         futureManager: customerManager,
         ready: (context, customers) {
-          final bool gettingData = customerManager.isRefreshing;
-          return SizedBox(
-            width: double.infinity,
-            child: SingleChildScrollView(
-              child: PaginatedDataTable(
-                availableRowsPerPage: const [5, 10, 20],
-                onRowsPerPageChanged: (rows) {
-                  if (rows == null) return;
-                  setState(() {
-                    limit = rows;
-                  });
-                  fetchData();
-                },
-                source: gettingData
-                    ? MyDataSource(
-                        customers: [],
-                        total: total,
-                      )
-                    : MyDataSource(
-                        customers: customers,
-                        total: total,
-                      ),
-                onPageChanged: (cursor) {
-                  int newPage = (cursor ~/ limit) + 1;
-                  page = newPage;
-                  fetchData();
-                },
-                header: const Text("Customers"),
-                rowsPerPage: limit,
-                showCheckboxColumn: true,
-                dataRowHeight: 100,
-                columns: [
-                  for (var col in ["", 'Name', "Email", "Role", "Action"]) DataColumn(label: Text(col)),
-                ],
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: double.infinity,
+                child: DataTable(
+                  showCheckboxColumn: true,
+                  dataRowHeight: 100,
+                  columns: [
+                    for (var col in ["", 'Name', "Email", "Role", "Action"]) DataColumn(label: Text(col)),
+                  ],
+                  rows: [
+                    if (customerManager.isRefreshing)
+                      for (var _ in [1, 2, 3, 4, 5])
+                        DataRow(
+                          cells: [
+                            for (var _ in [1, 2, 3, 4, 5])
+                              const DataCell(
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                ),
+                              ),
+                          ],
+                        )
+                    else
+                      for (var customer in customers)
+                        DataRow(
+                          cells: [
+                            DataCell(CircleAvatar(
+                              radius: 25,
+                              backgroundImage: NetworkImage(
+                                SuraUtils.unsplashImage(
+                                  category: "person",
+                                  width: 201 + customers.indexOf(customer),
+                                ),
+                              ),
+                            )),
+                            DataCell(Text("${customer.firstName} ${customer.lastName}")),
+                            DataCell(Text(customer.email)),
+                            DataCell(
+                              Container(
+                                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                                decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  borderRadius: SuraDecoration.radius(4),
+                                ),
+                                child: Text(
+                                  customer.role.toUpperCase(),
+                                ).textColor(),
+                              ),
+                            ),
+                            DataCell(
+                              PopupMenuButton<int>(
+                                onSelected: (index) {},
+                                itemBuilder: (context) {
+                                  return [
+                                    const PopupMenuItem(child: Text("View"), value: 1),
+                                    const PopupMenuItem(child: Text("Edit"), value: 2),
+                                    const PopupMenuItem(child: Text("Delete"), value: 3),
+                                  ];
+                                },
+                              ),
+                            ),
+                          ],
+                        )
+                  ],
+                ),
               ),
-            ),
+              PaginationPager(
+                currentPage: page,
+                totalPage: total,
+                onChanged: (page) {
+                  this.page = page;
+                  fetchData();
+                },
+              ),
+            ],
           );
         },
       ),
