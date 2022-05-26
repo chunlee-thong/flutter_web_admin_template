@@ -17,6 +17,10 @@ dependencies:
   sura_manager: ^1.4.0
   provider: ^6.0.3
   dio: ^4.0.6
+  sentry: ^6.5.1
+  go_router: ^3.1.0
+  ##UI
+  fl_chart: ^0.50.6
 
 dev_dependencies:
   flutter_test:

@@ -11,6 +11,6 @@ import 'package:flutter_web_admin_template/app.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const AdminTemplateApp());
+    await tester.pumpWidget(AdminTemplateApp());
   });
 }

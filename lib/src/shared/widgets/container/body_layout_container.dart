@@ -7,6 +7,7 @@ class BodyLayoutContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: child,

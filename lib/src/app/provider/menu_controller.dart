@@ -5,15 +5,25 @@ class MenuController extends ChangeNotifier {
 
   int get menuIndex => _menuIndex;
 
-  final PageController pageController = PageController();
+  PageController? pageController;
+
+  void setController(PageController c) {
+    pageController = c;
+    _menuIndex = c.initialPage;
+  }
 
   bool isSelected(int index) => _menuIndex == index;
 
   set menuIndex(int menuIndex) {
     _menuIndex = menuIndex;
     notifyListeners();
-    if (pageController.hasClients) {
-      pageController.jumpToPage(_menuIndex);
+    if (pageController!.hasClients) {
+      pageController!.jumpToPage(_menuIndex);
     }
+  }
+
+  void clearController() {
+    pageController?.dispose();
+    pageController = null;
   }
 }

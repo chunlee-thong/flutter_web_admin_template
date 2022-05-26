@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_admin_template/src/app/provider/index.dart';
 import 'package:flutter_web_admin_template/src/app/provider/menu_controller.dart';
 import 'package:flutter_web_admin_template/src/features/root/data/menu_model.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sura_flutter/sura_flutter.dart';
 
 class SideMenuLayout extends StatelessWidget {
@@ -39,7 +40,7 @@ class SideMenuLayout extends StatelessWidget {
                     title: Text(menu.title),
                     onTap: () {
                       readProvider<MenuController>(context).menuIndex = index;
-                      infoLog(SuraResponsive.screenWidth);
+                      context.go("/${menu.title.toLowerCase()}");
                       if (SuraResponsive.screenWidth <= 800) {
                         Navigator.pop(context);
                       }

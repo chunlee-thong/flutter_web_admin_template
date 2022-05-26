@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_admin_template/src/features/dashboard/widgets/dashboard_card_container.dart';
+import 'package:sura_flutter/sura_flutter.dart';
 
-class TotalProfitCard extends StatelessWidget {
+class TotalProfitCard extends DashboardCardContainer {
   const TotalProfitCard({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Container();
+  DashboardCardIcon get cardIcon => DashboardCardIcon(
+        Colors.purple,
+        const Icon(
+          Icons.attach_money,
+          color: Colors.white,
+        ),
+      );
+
+  @override
+  Widget footer() {
+    return emptySizedBox;
   }
+
+  @override
+  String get title => "total profit";
+
+  @override
+  String get value => "\$23K";
 }
