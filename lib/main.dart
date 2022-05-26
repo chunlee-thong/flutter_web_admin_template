@@ -11,6 +11,8 @@ void main() {
   if (kIsWeb) {
     GoRouter.setUrlPathStrategy(UrlPathStrategy.path);
   }
+  runApp(AdminTemplateApp());
+  return;
   runZonedGuarded(() async {
     await Sentry.init(
       (options) {
@@ -19,6 +21,6 @@ void main() {
       appRunner: () => runApp(AdminTemplateApp()),
     );
   }, (exception, stackTrace) async {
-    errorLog("RunZonedGuard error: ", exception);
+    errorLog("RunZonedGuard error: $exception", stackTrace);
   });
 }

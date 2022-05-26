@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_admin_template/src/app/provider/auth_provider.dart';
+import 'package:flutter_web_admin_template/src/app/provider/index.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sura_flutter/sura_flutter.dart';
 
@@ -56,7 +58,8 @@ class _LoginPageState extends State<LoginPage> with SuraFormMixin {
                   height: 46,
                   margin: EdgeInsets.zero,
                   onPressed: () {
-                    context.go("/");
+                    readProvider<AuthProvider>(context).isLoggedIn = true;
+                    context.go("/home/dashboard");
                   },
                   child: const Text("LOGIN"),
                 ),

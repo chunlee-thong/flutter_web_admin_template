@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_admin_template/src/app/constant/app_theme_color.dart';
+import 'package:flutter_web_admin_template/src/app/provider/auth_provider.dart';
 import 'package:flutter_web_admin_template/src/app/provider/menu_controller.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -9,35 +10,52 @@ import 'src/features/login/login_page.dart';
 import 'src/features/root/root_page.dart';
 
 class AdminTemplateApp extends StatelessWidget {
+  final AuthProvider authProvider = AuthProvider();
   AdminTemplateApp({Key? key}) : super(key: key);
-
-  final kRouter = GoRouter(
-    routes: [
-      GoRoute(
-        path: '/:menu',
-        builder: (context, state) {
-          final menu = state.params['menu']!;
-          int index = RootPage.pages.keys.toList().indexOf(menu);
-          return RootPage(index: index);
-        },
-      ),
-      GoRoute(
-        path: '/login',
-        builder: (context, state) => const LoginPage(),
-      ),
-      GoRoute(
-        path: '/',
-        redirect: (state) => "/home/dashboard",
-      ),
-    ],
-    initialLocation: "/login",
-  );
 
   @override
   Widget build(BuildContext context) {
+    var kRouter = GoRouter(
+      routes: [
+        GoRoute(
+          path: "/login",
+          name: "not-authenticated",
+          builder: (context, state) {
+            return const LoginPage();
+          },
+        ),
+        GoRoute(
+          path: '/home/:menu',
+          name: "authenticated",
+          builder: (context, state) {
+            final menu = state.params['menu']!;
+            int index = RootPage.pages.keys.toList().indexOf(menu);
+            return RootPage(index: index);
+          },
+          redirect: (state) {
+            return null;
+          },
+        ),
+      ],
+      initialLocation: "/",
+      redirect: (state) {
+        if (authProvider.isLoggedIn) {
+          if (!RootPage.routes.contains(state.subloc)) {
+            return "/home/dashboard";
+          }
+        } else {
+          if (state.subloc != "/login") {
+            return "/login";
+          }
+        }
+        return null;
+      },
+    );
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (c) => MenuController()),
+        Provider.value(value: authProvider),
       ],
       child: MaterialApp.router(
         routeInformationParser: kRouter.routeInformationParser,

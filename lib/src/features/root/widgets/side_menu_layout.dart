@@ -40,7 +40,7 @@ class SideMenuLayout extends StatelessWidget {
                     title: Text(menu.title),
                     onTap: () {
                       readProvider<MenuController>(context).menuIndex = index;
-                      context.go("/${menu.title.toLowerCase()}");
+                      context.go("/home/${menu.title.toLowerCase()}");
                       if (SuraResponsive.screenWidth <= 800) {
                         Navigator.pop(context);
                       }

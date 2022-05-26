@@ -22,26 +22,32 @@ class RootPage extends StatefulWidget {
     "inventory": InventoryPage(),
     "customer": CustomerPage(),
   };
+
+  static const List<String> routes = [
+    "/home/dashboard",
+    "/home/inventory",
+    "/home/customer",
+  ];
 }
 
 class _RootPageState extends State<RootPage> {
   late PageController pageController = PageController(initialPage: widget.index);
-
+  late MenuController menuController = readProvider<MenuController>(context);
   @override
   void initState() {
-    readProvider<MenuController>(context).setController(pageController);
+    menuController.setController(pageController);
     super.initState();
   }
 
   @override
   void dispose() {
-    readProvider<MenuController>(context).clearController();
+    menuController.clearController();
     pageController.dispose();
     super.dispose();
   }
 
   String get getTitle {
-    String current = GoRouter.of(context).location;
+    String current = GoRouter.of(context).location.split("/").last;
     return "Web Admin | ${current.replaceFirst('/', '').capitalize()}";
   }
 
