@@ -2,46 +2,48 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_admin_template/src/app/provider/index.dart';
 import 'package:flutter_web_admin_template/src/app/provider/menu_controller.dart';
+import 'package:flutter_web_admin_template/src/app/router/main_router.dart';
 import 'package:flutter_web_admin_template/src/features/customer/customer_page.dart';
 import 'package:flutter_web_admin_template/src/features/inventory/inventory_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sura_flutter/sura_flutter.dart';
 
 import '../dashboard/dashboard_page.dart';
+import 'widgets/appbar_avatar.dart';
 import 'widgets/side_menu_layout.dart';
 
 class RootPage extends StatefulWidget {
-  final int index;
-  const RootPage({Key? key, this.index = 0}) : super(key: key);
+  final String pageKey;
+  const RootPage({Key? key, this.pageKey = AppRoutes.dashboard}) : super(key: key);
 
   @override
   State<RootPage> createState() => _RootPageState();
 
   static const Map<String, Widget> pages = {
-    "dashboard": DashboardPage(),
-    "inventory": InventoryPage(),
-    "customer": CustomerPage(),
+    AppRoutes.dashboard: DashboardPage(),
+    AppRoutes.inventory: InventoryPage(),
+    AppRoutes.customer: CustomerPage(),
   };
-
-  static const List<String> routes = [
-    "/home/dashboard",
-    "/home/inventory",
-    "/home/customer",
-  ];
 }
 
 class _RootPageState extends State<RootPage> {
-  late PageController pageController = PageController(initialPage: widget.index);
+  late PageController pageController;
   late MenuController menuController = readProvider<MenuController>(context);
+
+  void initPage() {
+    int index = RootPage.pages.keys.toList().indexOf(widget.pageKey);
+    pageController = PageController(initialPage: index);
+    menuController.setController(pageController);
+  }
+
   @override
   void initState() {
-    menuController.setController(pageController);
+    initPage();
     super.initState();
   }
 
   @override
   void dispose() {
-    menuController.clearController();
     pageController.dispose();
     super.dispose();
   }
@@ -69,21 +71,15 @@ class _RootPageState extends State<RootPage> {
                   actions: [
                     IconButton(onPressed: () {}, icon: const Icon(Icons.people)),
                     IconButton(onPressed: () {}, icon: const Icon(Icons.notifications_active)),
-                    IconButton(
-                      onPressed: () {},
-                      icon: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          SuraUtils.unsplashImage(category: "person"),
-                        ),
-                      ),
-                    ),
+                    const AppBarAvatar(),
                   ],
                 ),
                 body: Builder(
                   builder: (context) {
                     return PageView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
                       controller: pageController,
-                      itemBuilder: (context, index) => RootPage.pages.values.toList()[index],
+                      itemBuilder: (context, index) => RootPage.pages[widget.pageKey] ?? emptySizedBox,
                       itemCount: RootPage.pages.keys.length,
                     );
                   },

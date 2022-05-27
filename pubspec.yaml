@@ -19,6 +19,8 @@ dependencies:
   dio: ^4.0.6
   sentry: ^6.5.1
   go_router: ^3.1.0
+  shared_preferences: ^2.0.15
+  get_it: ^7.2.0
   ##UI
   fl_chart: ^0.50.6
 

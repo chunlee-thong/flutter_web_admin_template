@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_web_admin_template/src/app/provider/auth_provider.dart';
-import 'package:flutter_web_admin_template/src/app/provider/index.dart';
+import 'package:flutter_web_admin_template/src/app/router/main_router.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sura_flutter/sura_flutter.dart';
 
@@ -12,8 +15,20 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> with SuraFormMixin {
-  TextEditingController emailTC = TextEditingController();
-  TextEditingController passwordTC = TextEditingController();
+  TextEditingController emailTC = TextEditingController(text: "admin@gmail.com");
+  TextEditingController passwordTC = TextEditingController(text: "123456");
+  AuthProvider authProvider = GetIt.I.get<AuthProvider>();
+
+  FutureOr<void> onSignIn() async {
+    try {
+      String email = emailTC.text.trim();
+      String password = passwordTC.text.trim();
+      await authProvider.onSignIn(email, password);
+      GoRouter.of(context).go(AppRoutes.dashboard);
+    } catch (e) {
+      showSuraSimpleDialog(context, e.toString());
+    }
+  }
 
   @override
   void dispose() {
@@ -40,6 +55,7 @@ class _LoginPageState extends State<LoginPage> with SuraFormMixin {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+                  controller: emailTC,
                   decoration: const InputDecoration(
                     labelText: "Email",
                     prefixIcon: Icon(Icons.email),
@@ -47,6 +63,7 @@ class _LoginPageState extends State<LoginPage> with SuraFormMixin {
                 ),
                 const SpaceY(24),
                 TextFormField(
+                  controller: passwordTC,
                   obscureText: true,
                   decoration: const InputDecoration(
                     labelText: "Password",
@@ -57,10 +74,7 @@ class _LoginPageState extends State<LoginPage> with SuraFormMixin {
                 SuraAsyncButton(
                   height: 46,
                   margin: EdgeInsets.zero,
-                  onPressed: () {
-                    readProvider<AuthProvider>(context).isLoggedIn = true;
-                    context.go("/home/dashboard");
-                  },
+                  onPressed: onSignIn,
                   child: const Text("LOGIN"),
                 ),
               ],
