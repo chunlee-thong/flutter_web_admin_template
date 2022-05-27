@@ -1,16 +1,10 @@
-# flutter_web_admin_template
+# Flutter web admin dashboard
 
-A new Flutter project.
+Experiment on Flutter web for Admin dashboard.
+UI inspired from : [Material React kit](https://material-kit-react.devias.io/)
 
-## Getting Started
+## Screenshot (WIP)
 
-This project is a starting point for a Flutter application.
+![Alt text](/screenshots/dashboard.PNG "Dashboard")
+![Alt text](/screenshots/customer.PNG "Customer")
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
