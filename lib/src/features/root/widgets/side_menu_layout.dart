@@ -49,6 +49,34 @@ class SideMenuLayout extends StatelessWidget {
                   ),
                 );
               }).toList(),
+              SuraAccordion(
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                titlePadding: EdgeInsets.zero,
+                icon: const Icon(Icons.arrow_drop_down_outlined, color: Colors.white),
+                titleDecoration: BoxDecoration(
+                  borderRadius: SuraDecoration.radius(),
+                ),
+                childrenPadding: const EdgeInsets.symmetric(horizontal: 16),
+                title: ListTile(
+                  shape: SuraDecoration.roundRect(),
+                  leading: const Icon(Icons.menu),
+                  title: const Text("CRM"),
+                ),
+                children: [
+                  ListTile(
+                    onTap: () {},
+                    shape: SuraDecoration.roundRect(),
+                    leading: const Icon(Icons.message_rounded),
+                    title: const Text("Message"),
+                  ),
+                  ListTile(
+                    onTap: () {},
+                    shape: SuraDecoration.roundRect(),
+                    leading: const Icon(Icons.people),
+                    title: const Text("Top fan"),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

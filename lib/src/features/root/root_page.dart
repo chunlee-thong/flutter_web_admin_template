@@ -10,6 +10,8 @@ import 'package:sura_flutter/sura_flutter.dart';
 
 import '../dashboard/dashboard_page.dart';
 import 'widgets/appbar_avatar.dart';
+import 'widgets/appbar_language.dart';
+import 'widgets/appbar_notification.dart';
 import 'widgets/side_menu_layout.dart';
 
 class RootPage extends StatefulWidget {
@@ -68,10 +70,10 @@ class _RootPageState extends State<RootPage> {
               child: Scaffold(
                 drawer: isBigScreen ? null : const SideMenuLayout(),
                 appBar: AppBar(
-                  actions: [
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.people)),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.notifications_active)),
-                    const AppBarAvatar(),
+                  actions: const [
+                    AppBarNotification(),
+                    AppBarLanguage(),
+                    AppBarAvatar(),
                   ],
                 ),
                 body: Builder(
