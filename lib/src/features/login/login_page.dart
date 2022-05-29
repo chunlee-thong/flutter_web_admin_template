@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_admin_template/src/app/provider/auth_provider.dart';
 import 'package:flutter_web_admin_template/src/app/router/main_router.dart';
+import 'package:flutter_web_admin_template/src/shared/widgets/common/app_logo.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sura_flutter/sura_flutter.dart';
@@ -46,14 +47,17 @@ class _LoginPageState extends State<LoginPage> with SuraFormMixin {
         body: Center(
           child: Container(
             width: 400,
-            padding: const EdgeInsets.all(24),
-            decoration: const BoxDecoration(
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
+            decoration: BoxDecoration(
               color: Colors.white,
+              borderRadius: SuraDecoration.radius(24),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const AppLogo(),
+                const SpaceY(32),
                 TextFormField(
                   controller: emailTC,
                   decoration: const InputDecoration(
@@ -77,6 +81,7 @@ class _LoginPageState extends State<LoginPage> with SuraFormMixin {
                   onPressed: onSignIn,
                   child: const Text("LOGIN"),
                 ),
+                const SpaceY(32),
               ],
             ),
           ),
