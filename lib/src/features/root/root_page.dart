@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_web_admin_template/src/app/provider/index.dart';
 import 'package:flutter_web_admin_template/src/app/provider/menu_controller.dart';
 import 'package:flutter_web_admin_template/src/app/router/main_router.dart';
+import 'package:flutter_web_admin_template/src/features/crm/message/message_page.dart';
 import 'package:flutter_web_admin_template/src/features/customer/customer_page.dart';
 import 'package:flutter_web_admin_template/src/features/inventory/inventory_page.dart';
 import 'package:go_router/go_router.dart';
@@ -25,6 +26,11 @@ class RootPage extends StatefulWidget {
     AppRoutes.dashboard: DashboardPage(),
     AppRoutes.inventory: InventoryPage(),
     AppRoutes.customer: CustomerPage(),
+    AppRoutes.setting: Text("Setting"),
+    AppRoutes.report: Text("Report"),
+    AppRoutes.admin: Text("Admin"),
+    AppRoutes.message: MessagePage(),
+    AppRoutes.request: Text("Request"),
   };
 }
 

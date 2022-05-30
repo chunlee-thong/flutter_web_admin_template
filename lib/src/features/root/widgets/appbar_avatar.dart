@@ -19,13 +19,23 @@ class AppBarAvatar extends StatelessWidget {
       itemBuilder: (context) {
         return [
           PopupMenuItem(
+            value: 2,
+            onTap: () {},
+            child: const ListTile(
+              mouseCursor: MouseCursor.defer,
+              title: Text("Profile"),
+              trailing: Icon(Icons.person),
+            ),
+          ),
+          PopupMenuItem(
             value: 1,
             onTap: () {
               authProvider.logoutUser(context);
             },
             child: const ListTile(
+              mouseCursor: MouseCursor.defer,
               title: Text("Logout"),
-              leading: Icon(Icons.logout),
+              trailing: Icon(Icons.logout),
             ),
           ),
         ];

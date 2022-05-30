@@ -5,6 +5,8 @@ class AppRoutes {
   static const setting = "/home/setting";
   static const admin = "/home/admin";
   static const report = "/home/report";
+  static const message = "/home/message";
+  static const request = "/home/request";
   //
   static const login = "/login";
 }
@@ -16,6 +18,8 @@ const List<String> kAuthenticatedRoutes = [
   AppRoutes.setting,
   AppRoutes.admin,
   AppRoutes.report,
+  AppRoutes.message,
+  AppRoutes.request,
 ];
 
 //

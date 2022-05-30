@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_admin_template/src/features/customer/data/customer_model.dart';
+import 'package:flutter_web_admin_template/src/shared/widgets/common/tag.dart';
 import 'package:flutter_web_admin_template/src/shared/widgets/container/body_layout_container.dart';
 import 'package:sura_flutter/sura_flutter.dart';
 import 'package:sura_manager/sura_manager.dart';
@@ -95,18 +96,7 @@ class _CustomerPageState extends State<CustomerPage> with AutomaticKeepAliveClie
                     )),
                     DataCell(Text("${customer.firstName} ${customer.lastName}")),
                     DataCell(Text(customer.email)),
-                    DataCell(
-                      Container(
-                        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: SuraDecoration.radius(4),
-                        ),
-                        child: Text(
-                          customer.role.toUpperCase(),
-                        ).textColor(),
-                      ),
-                    ),
+                    DataCell(Tag(text: customer.role.toUpperCase())),
                   ],
                 )
             ],

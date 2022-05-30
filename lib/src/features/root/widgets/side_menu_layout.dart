@@ -5,13 +5,14 @@ import 'package:flutter_web_admin_template/src/features/root/data/menu_model.dar
 import 'package:go_router/go_router.dart';
 import 'package:sura_flutter/sura_flutter.dart';
 
+const unselected = Color(0xFF9CA3AF);
+const selected = Color(0xFF10B981);
+
 class SideMenuLayout extends StatelessWidget {
   const SideMenuLayout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    const unselected = Color(0xFF9CA3AF);
-    const selected = Color(0xFF10B981);
     return Material(
       color: const Color(0xFF111827),
       child: ListTileTheme(
@@ -29,54 +30,7 @@ class SideMenuLayout extends StatelessWidget {
             children: [
               _buildCompanyInfo(),
               const Divider(color: Colors.white, thickness: 0.2),
-              ...kMenuList.map((menu) {
-                int index = kMenuList.indexOf(menu);
-                bool selected = index == watchProvider<MenuController>(context).menuIndex;
-                return Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  child: ListTile(
-                    shape: SuraDecoration.roundRect(),
-                    leading: Icon(menu.icon),
-                    title: Text(menu.title),
-                    onTap: () {
-                      readProvider<MenuController>(context).menuIndex = index;
-                      context.go("/home/${menu.title.toLowerCase()}");
-                      if (SuraResponsive.screenWidth <= 800) {
-                        Navigator.pop(context);
-                      }
-                    },
-                    selected: selected,
-                  ),
-                );
-              }).toList(),
-              SuraAccordion(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                titlePadding: EdgeInsets.zero,
-                icon: const Icon(Icons.arrow_drop_down_outlined, color: Colors.white),
-                titleDecoration: BoxDecoration(
-                  borderRadius: SuraDecoration.radius(),
-                ),
-                childrenPadding: const EdgeInsets.symmetric(horizontal: 16),
-                title: ListTile(
-                  shape: SuraDecoration.roundRect(),
-                  leading: const Icon(Icons.menu),
-                  title: const Text("CRM"),
-                ),
-                children: [
-                  ListTile(
-                    onTap: () {},
-                    shape: SuraDecoration.roundRect(),
-                    leading: const Icon(Icons.message_rounded),
-                    title: const Text("Message"),
-                  ),
-                  ListTile(
-                    onTap: () {},
-                    shape: SuraDecoration.roundRect(),
-                    leading: const Icon(Icons.people),
-                    title: const Text("Top fan"),
-                  ),
-                ],
-              ),
+              const _MenuList(),
             ],
           ),
         ),
@@ -120,6 +74,64 @@ class SideMenuLayout extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _MenuList extends StatelessWidget {
+  const _MenuList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final menuController = watchProvider<MenuController>(context);
+    String location = GoRouter.of(context).location.split("/").last;
+    return Column(
+      children: kMenuList.map((menu) {
+        if (menu.children != null) {
+          List<String> children = menu.children!.map((e) => e.title.toLowerCase()).toList();
+          return ExpansionTile(
+            initiallyExpanded: children.contains(location),
+            tilePadding: EdgeInsets.zero,
+            textColor: unselected,
+            collapsedTextColor: unselected,
+            collapsedIconColor: unselected,
+            iconColor: unselected,
+            title: ListTile(
+              shape: SuraDecoration.roundRect(),
+              leading: const Icon(Icons.menu),
+              title: const Text("CRM"),
+            ),
+            children: [
+              for (var child in menu.children!)
+                ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 32),
+                  onTap: () {
+                    readProvider<MenuController>(context).menuIndex = child.index;
+                    context.go("/home/${child.title.toLowerCase()}");
+                    if (SuraResponsive.screenWidth <= 800) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  leading: Icon(child.icon),
+                  title: Text(child.title),
+                  selected: menuController.menuIndex == child.index,
+                ),
+            ],
+          );
+        }
+        return ListTile(
+          leading: Icon(menu.icon),
+          title: Text(menu.title),
+          onTap: () {
+            readProvider<MenuController>(context).menuIndex = menu.index;
+            context.go("/home/${menu.title.toLowerCase()}");
+            if (SuraResponsive.screenWidth <= 800) {
+              Navigator.pop(context);
+            }
+          },
+          selected: menuController.menuIndex == menu.index,
+        );
+      }).toList(),
     );
   }
 }
