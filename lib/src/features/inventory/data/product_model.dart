@@ -21,6 +21,6 @@ class DummyProduct {
   }
 }
 
-const kProductList = [
-  DummyProduct(name: "Coca", no: 1, quantity: 32, price: 32.99),
+var kProductList = [
+  const DummyProduct(name: "Coca", no: 1, quantity: 32, price: 32.99),
 ];

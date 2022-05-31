@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_web_admin_template/src/app/constant/app_style_decoration.dart';
 import 'package:flutter_web_admin_template/src/shared/widgets/container/pager.dart';
 import 'package:sura_flutter/sura_flutter.dart';
 
@@ -36,11 +37,12 @@ class MyCustomDataTable<T extends Object> extends StatefulWidget {
 }
 
 class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<T>> {
-  List get _dummyRowList => List.generate(widget.data.length, (index) => index);
-  List get _dummyColumnList => List.generate(widget.columns.length, (index) => index);
+  List<int> get _dummyRowList => List.generate(widget.data.length, (index) => index);
+  List<int> get _dummyColumnList => List.generate(widget.columns.length, (index) => index);
 
   //
   final ScrollController scrollController = ScrollController();
+  bool get isEmpty => widget.data.isEmpty;
 
   @override
   void dispose() {
@@ -89,6 +91,7 @@ class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<
                   ),
                 ),
               ),
+              if (isEmpty) _buildNoDataWidget(),
               Positioned(
                 right: 0,
                 child: DecoratedBox(
@@ -145,9 +148,9 @@ class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<
             },
             itemBuilder: (context) {
               return [
-                if (widget.onEdit != null) const PopupMenuItem(child: Text("View"), value: 1),
+                if (widget.onView != null) const PopupMenuItem(child: Text("View"), value: 1),
                 if (widget.onEdit != null) const PopupMenuItem(child: Text("Edit"), value: 2),
-                if (widget.onEdit != null) const PopupMenuItem(child: Text("Delete"), value: 3),
+                if (widget.onDelete != null) const PopupMenuItem(child: Text("Delete"), value: 3),
               ];
             },
           ),
@@ -170,6 +173,31 @@ class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<
             ),
         ])
     ];
+  }
+
+  Widget _buildNoDataWidget() {
+    return Container(
+      color: Colors.white,
+      margin: EdgeInsets.only(top: widget.headingRowHeight),
+      height: 200,
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Divider(height: 0),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(Icons.storage, size: 32),
+                SpaceY(12),
+                Text("No data", style: kSubtitleStyle),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildTableAction() {

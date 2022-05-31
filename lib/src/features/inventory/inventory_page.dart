@@ -28,10 +28,16 @@ class _InventoryPageState extends State<InventoryPage> {
       child: productListManager.when(
         ready: (products) => MyCustomDataTable<DummyProduct>(
           columns: const ["No", "Product name", "Quantity", "Price"],
-          onEdit: (data) async {},
+          onEdit: (data) async {
+            showDialog(context: context, builder: (c) => AddEditProductDialog(product: data));
+          },
+          onDelete: (data) {
+            kProductList.removeWhere((element) => element.no == data.no);
+            productListManager.updateData(kProductList);
+          },
           createButton: ElevatedButton.icon(
             onPressed: () {
-              showDialog(context: context, builder: (c) => const AddProductDialog());
+              showDialog(context: context, builder: (c) => const AddEditProductDialog());
             },
             icon: const Icon(Icons.add),
             label: const Text("Create"),
