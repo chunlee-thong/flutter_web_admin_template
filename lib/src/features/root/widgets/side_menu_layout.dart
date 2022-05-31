@@ -81,6 +81,14 @@ class SideMenuLayout extends StatelessWidget {
 class _MenuList extends StatelessWidget {
   const _MenuList({Key? key}) : super(key: key);
 
+  void onNavigate(BuildContext context, MenuModel menu) {
+    readProvider<MenuController>(context).menuIndex = menu.index;
+    context.go("/home/${menu.title.toLowerCase()}");
+    if (SuraResponsive.screenWidth <= 800) {
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final menuController = watchProvider<MenuController>(context);
@@ -106,11 +114,7 @@ class _MenuList extends StatelessWidget {
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 32),
                   onTap: () {
-                    readProvider<MenuController>(context).menuIndex = child.index;
-                    context.go("/home/${child.title.toLowerCase()}");
-                    if (SuraResponsive.screenWidth <= 800) {
-                      Navigator.pop(context);
-                    }
+                    onNavigate(context, child);
                   },
                   leading: Icon(child.icon),
                   title: Text(child.title),
@@ -123,11 +127,7 @@ class _MenuList extends StatelessWidget {
           leading: Icon(menu.icon),
           title: Text(menu.title),
           onTap: () {
-            readProvider<MenuController>(context).menuIndex = menu.index;
-            context.go("/home/${menu.title.toLowerCase()}");
-            if (SuraResponsive.screenWidth <= 800) {
-              Navigator.pop(context);
-            }
+            onNavigate(context, menu);
           },
           selected: menuController.menuIndex == menu.index,
         );

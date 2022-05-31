@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_web_admin_template/src/shared/widgets/container/pager.dart';
 import 'package:sura_flutter/sura_flutter.dart';
@@ -10,9 +12,10 @@ class MyCustomDataTable<T extends Object> extends StatefulWidget {
   final PaginationPager? pager;
   final bool isLoading;
   final List<T> data;
-  final Future Function(T)? onEdit;
-  final Future Function(T)? onView;
-  final Future Function(T)? onDelete;
+  final FutureOr<void> Function(T)? onEdit;
+  final FutureOr<void> Function(T)? onView;
+  final FutureOr<void> Function(T)? onDelete;
+  final Widget? createButton;
   const MyCustomDataTable({
     Key? key,
     required this.columns,
@@ -25,6 +28,7 @@ class MyCustomDataTable<T extends Object> extends StatefulWidget {
     this.onEdit,
     this.onView,
     this.onDelete,
+    this.createButton,
   }) : super(key: key);
 
   @override
@@ -32,8 +36,8 @@ class MyCustomDataTable<T extends Object> extends StatefulWidget {
 }
 
 class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<T>> {
-  late final _dummyRowList = List.generate(widget.data.length, (index) => index);
-  late final _dummyColumnList = List.generate(widget.columns.length, (index) => index);
+  List get _dummyRowList => List.generate(widget.data.length, (index) => index);
+  List get _dummyColumnList => List.generate(widget.columns.length, (index) => index);
 
   //
   final ScrollController scrollController = ScrollController();
@@ -54,6 +58,8 @@ class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<
     const actionPaneWidth = 84.0;
     return ListView(
       children: [
+        _buildTableAction(),
+        const SpaceY(16),
         Scrollbar(
           controller: scrollController,
           isAlwaysShown: true,
@@ -164,5 +170,13 @@ class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<
             ),
         ])
     ];
+  }
+
+  Widget _buildTableAction() {
+    return Row(
+      children: [
+        if (widget.createButton != null) widget.createButton!,
+      ],
+    );
   }
 }

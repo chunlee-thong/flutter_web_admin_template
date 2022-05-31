@@ -11,9 +11,9 @@ import 'package:sura_flutter/sura_flutter.dart';
 import 'src/features/login/login_page.dart';
 import 'src/features/root/root_page.dart';
 
-class AdminTemplateApp extends StatelessWidget {
+class AdminDashboardApp extends StatelessWidget {
   final AuthProvider authProvider = GetIt.I.get<AuthProvider>();
-  AdminTemplateApp({Key? key}) : super(key: key);
+  AdminDashboardApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +21,12 @@ class AdminTemplateApp extends StatelessWidget {
       routes: [
         GoRoute(
           path: AppRoutes.login,
-          name: "not-authenticated",
           builder: (context, state) {
             return const LoginPage();
           },
         ),
         GoRoute(
           path: '/home/:menu',
-          name: "authenticated",
           builder: (context, state) {
             final menu = state.location;
             return RootPage(pageKey: menu);

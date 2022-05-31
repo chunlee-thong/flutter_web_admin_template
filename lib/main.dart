@@ -12,7 +12,7 @@ void main() async {
   if (kIsWeb) {
     GoRouter.setUrlPathStrategy(UrlPathStrategy.path);
   }
-  runApp(AdminTemplateApp());
+  runApp(AdminDashboardApp());
   // return;
   // runZonedGuarded(() async {
   //   await Sentry.init(
