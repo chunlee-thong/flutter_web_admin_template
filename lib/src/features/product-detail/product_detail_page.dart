@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_admin_template/src/app/constant/app_theme_color.dart';
 import 'package:flutter_web_admin_template/src/features/inventory/data/product_model.dart';
 import 'package:flutter_web_admin_template/src/features/inventory/inventory_page.dart';
+import 'package:sura_manager/sura_manager.dart';
 
-class ProductDetailPage extends StatefulWidget {
+class ProductDetailPage extends ConsumerStatefulWidget {
   final int productId;
   const ProductDetailPage({Key? key, required this.productId}) : super(key: key);
 
   @override
-  State<ProductDetailPage> createState() => _ProductDetailPageState();
+  ConsumerState<ProductDetailPage> createState() => _ProductDetailPageState();
 }
 
-class _ProductDetailPageState extends State<ProductDetailPage> {
+class _ProductDetailPageState extends ConsumerState<ProductDetailPage> {
+  late FutureManager<List<DummyProduct>> productListManager = ref.read(productListProvider);
   @override
   void initState() {
     super.initState();
