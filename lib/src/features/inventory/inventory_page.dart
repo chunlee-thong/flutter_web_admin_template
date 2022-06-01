@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_admin_template/src/app/router/main_router.dart';
 import 'package:flutter_web_admin_template/src/features/inventory/data/product_model.dart';
 import 'package:flutter_web_admin_template/src/shared/widgets/layout/custom_table.dart';
@@ -9,38 +8,28 @@ import 'package:sura_manager/sura_manager.dart';
 
 import 'widgets/add_product_dialog.dart';
 
-final productListProvider = Provider.autoDispose<FutureManager<List<DummyProduct>>>((ref) {
-  final FutureManager<List<DummyProduct>> manager = FutureManager(
-    reloading: false,
-    cacheOption: const ManagerCacheOption(cacheTime: Duration(minutes: 1)),
-    futureFunction: () async {
-      infoLog("fetch product");
-      await SuraUtils.wait(500);
-      return Future.value(kProductList);
-    },
-  );
+final FutureManager<List<DummyProduct>> productListManager = FutureManager(
+  reloading: false,
+  cacheOption: const ManagerCacheOption(cacheTime: Duration(minutes: 1)),
+  futureFunction: () async {
+    await SuraUtils.wait(500);
+    return Future.value(kProductList);
+  },
+);
 
-  ref.onDispose(() {
-    manager.updateData(null);
-  });
-  return manager;
-});
-
-class InventoryPage extends ConsumerStatefulWidget {
+class InventoryPage extends StatefulWidget {
   const InventoryPage({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<InventoryPage> createState() => _InventoryPageState();
+  State<InventoryPage> createState() => _InventoryPageState();
 }
 
-class _InventoryPageState extends ConsumerState<InventoryPage> {
-  late final productListManager = ref.read(productListProvider);
-
-  // @override
-  // void initState() {
-  //   productListManager.refresh();
-  //   super.initState();
-  // }
+class _InventoryPageState extends State<InventoryPage> {
+  @override
+  void initState() {
+    productListManager.refresh();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
