@@ -18,7 +18,7 @@ class _AddEditProductDialogState extends State<AddEditProductDialog> {
 
   @override
   void initState() {
-    noTC = TextEditingController(text: "${widget.product?.no ?? "2"}");
+    noTC = TextEditingController(text: "${widget.product?.id ?? "2"}");
     nameTC = TextEditingController(text: widget.product?.name ?? "Pepsi");
     qtyTC = TextEditingController(text: "${widget.product?.quantity ?? "24"}");
     priceTC = TextEditingController(text: "${widget.product?.price ?? "24.99"}");
@@ -47,7 +47,7 @@ class _AddEditProductDialogState extends State<AddEditProductDialog> {
             const SpaceY(24),
             TextFormField(
               controller: noTC,
-              decoration: const InputDecoration(hintText: "No"),
+              decoration: const InputDecoration(hintText: "ID"),
             ),
             const SpaceY(16),
             TextFormField(
@@ -69,7 +69,7 @@ class _AddEditProductDialogState extends State<AddEditProductDialog> {
               onPressed: () async {
                 await SuraUtils.wait();
                 final dummy = DummyProduct(
-                  no: int.parse(noTC.text),
+                  id: int.parse(noTC.text),
                   name: nameTC.text,
                   quantity: int.parse(qtyTC.text),
                   price: double.parse(priceTC.text),

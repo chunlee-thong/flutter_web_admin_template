@@ -43,46 +43,49 @@ class _LoginPageState extends State<LoginPage> with SuraFormMixin {
     return Title(
       title: "Web Admin | Login",
       color: Colors.white,
-      child: Scaffold(
-        body: Center(
-          child: Container(
-            width: 400,
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: SuraDecoration.radius(24),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const AppLogo(),
-                const SpaceY(32),
-                TextFormField(
-                  controller: emailTC,
-                  decoration: const InputDecoration(
-                    labelText: "Email",
-                    prefixIcon: Icon(Icons.email),
+      child: KeyboardDismiss(
+        child: Scaffold(
+          body: Center(
+            child: Container(
+              width: 400,
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
+              margin: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: SuraDecoration.radius(24),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const AppLogo(),
+                  const SpaceY(32),
+                  TextFormField(
+                    controller: emailTC,
+                    decoration: const InputDecoration(
+                      labelText: "Email",
+                      prefixIcon: Icon(Icons.email),
+                    ),
                   ),
-                ),
-                const SpaceY(24),
-                TextFormField(
-                  controller: passwordTC,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: "Password",
-                    prefixIcon: Icon(Icons.lock),
+                  const SpaceY(24),
+                  TextFormField(
+                    controller: passwordTC,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: "Password",
+                      prefixIcon: Icon(Icons.lock),
+                    ),
                   ),
-                ),
-                const SpaceY(24),
-                SuraAsyncButton(
-                  height: 46,
-                  margin: EdgeInsets.zero,
-                  onPressed: onSignIn,
-                  child: const Text("LOGIN"),
-                ),
-                const SpaceY(32),
-              ],
+                  const SpaceY(24),
+                  SuraAsyncButton(
+                    height: 46,
+                    margin: EdgeInsets.zero,
+                    onPressed: onSignIn,
+                    child: const Text("LOGIN"),
+                  ),
+                  const SpaceY(32),
+                ],
+              ),
             ),
           ),
         ),

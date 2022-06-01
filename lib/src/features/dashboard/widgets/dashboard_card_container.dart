@@ -4,19 +4,30 @@ import 'package:sura_flutter/sura_flutter.dart';
 import '../../../app/constant/app_style_decoration.dart';
 import '../../../app/constant/app_theme_color.dart';
 
+TextStyle get dashboardCardTitleStyle {
+  return kSubtitleStyle.bold.setColor(AppColor.grey1).copyWith(
+        letterSpacing: 1.5,
+      );
+}
+
 abstract class DashboardCardContainer extends StatelessWidget {
   const DashboardCardContainer({Key? key}) : super(key: key);
 
-  TextStyle get cardTitleStyle => kSubtitleStyle.bold.setColor(AppColor.grey1).copyWith(
-        letterSpacing: 1.5,
-      );
-
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Container(
       margin: EdgeInsets.zero,
-      elevation: 1.5,
-      shape: SuraDecoration.roundRect(8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: SuraDecoration.radius(8),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade200,
+            blurRadius: 4,
+            spreadRadius: 2,
+          )
+        ],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Row(
@@ -28,7 +39,7 @@ abstract class DashboardCardContainer extends StatelessWidget {
                 children: [
                   Text(
                     title.toUpperCase(),
-                    style: cardTitleStyle,
+                    style: dashboardCardTitleStyle,
                   ),
                   const SpaceY(),
                   Text(value, style: kBigHeaderStyle),

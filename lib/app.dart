@@ -29,7 +29,20 @@ class AdminDashboardApp extends StatelessWidget {
           path: '/home/:menu',
           builder: (context, state) {
             final menu = state.location;
-            return RootPage(pageKey: menu);
+            return RootPage(mainPageKey: menu);
+          },
+          redirect: (state) {
+            return null;
+          },
+        ),
+        GoRoute(
+          path: '/home/product/:productId',
+          builder: (context, state) {
+            final productId = state.params['productId'];
+            return RootPage(
+              mainPageKey: AppRoutes.productDetail,
+              subroute: ProductDetailRoute(productId!),
+            );
           },
           redirect: (state) {
             return null;
@@ -39,9 +52,14 @@ class AdminDashboardApp extends StatelessWidget {
       initialLocation: authProvider.isLoggedIn ? AppRoutes.dashboard : AppRoutes.login,
       redirect: (state) {
         if (authProvider.isLoggedIn) {
-          if (!kAuthenticatedRoutes.contains(state.subloc)) {
-            return kAuthenticatedRoutes.first;
+          bool matchAtLeastOne = false;
+          for (var route in kAuthenticatedRoutes) {
+            if (state.location.startsWith(route)) {
+              matchAtLeastOne = true;
+              if (matchAtLeastOne) break;
+            }
           }
+          return matchAtLeastOne ? null : kAuthenticatedRoutes.first;
         } else {
           if (!kUnauthenticatedRoutes.contains(state.subloc)) {
             return kUnauthenticatedRoutes.first;
@@ -63,7 +81,7 @@ class AdminDashboardApp extends StatelessWidget {
           platform: TargetPlatform.windows,
           visualDensity: VisualDensity.standard,
           colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: SuraColor.toMaterial(AppColor.primary.value),
+            primarySwatch: AppColor.primaryMaterial,
           ),
           appBarTheme: const AppBarTheme(
             elevation: 1.0,

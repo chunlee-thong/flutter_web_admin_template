@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_web_admin_template/src/app/constant/app_style_decoration.dart';
+import 'package:flutter_web_admin_template/src/features/root/root_page.dart';
+import 'package:flutter_web_admin_template/src/features/root/widgets/side_menu_layout.dart';
 import 'package:flutter_web_admin_template/src/shared/widgets/container/pager.dart';
 import 'package:sura_flutter/sura_flutter.dart';
 
@@ -42,11 +44,25 @@ class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<
 
   //
   final ScrollController scrollController = ScrollController();
+  final ScrollController verticalScroll = ScrollController();
   bool get isEmpty => widget.data.isEmpty;
+  final GlobalKey tableKey = GlobalKey();
+
+  static const double actionPaneWidth = 84.0;
+  ValueNotifier<double?> tableSize = ValueNotifier(null);
+
+  double get getTableWidth {
+    double somePadding = 32 + actionPaneWidth;
+    double screen = MediaQuery.of(context).size.width;
+    bool hasSideMenu = screen > kMenuBreakpoint;
+    return (hasSideMenu ? (screen - SideMenuLayout.width) : screen) - somePadding;
+  }
 
   @override
   void dispose() {
     scrollController.dispose();
+    verticalScroll.dispose();
+    tableSize.dispose();
     super.dispose();
   }
 
@@ -56,9 +72,21 @@ class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<
       color: Colors.black,
       fontWeight: FontWeight.bold,
     );
-
-    const actionPaneWidth = 84.0;
+    final table = DataTable(
+      key: tableKey,
+      headingTextStyle: headerStyle,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      headingRowHeight: widget.headingRowHeight,
+      dataRowHeight: widget.dataRowHeight,
+      columns: [
+        for (var col in widget.columns) DataColumn(label: Text(col)),
+      ],
+      rows: widget.isLoading ? _buildLoadingRows() : widget.rows,
+    );
     return ListView(
+      controller: verticalScroll,
       children: [
         _buildTableAction(),
         const SpaceY(16),
@@ -75,20 +103,34 @@ class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<
                 ),
                 controller: scrollController,
                 scrollDirection: Axis.horizontal,
-                child: SizedBox(
-                  width: context.screenSize.width - 400,
-                  child: DataTable(
-                    headingTextStyle: headerStyle,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                    ),
-                    headingRowHeight: widget.headingRowHeight,
-                    dataRowHeight: widget.dataRowHeight,
-                    columns: [
-                      for (var col in widget.columns) DataColumn(label: Text(col)),
-                    ],
-                    rows: widget.isLoading ? _buildLoadingRows() : widget.rows,
-                  ),
+                child: LayoutBuilder(
+                  builder: (context, constraint) {
+                    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+                      RenderBox box = tableKey.currentContext!.findRenderObject() as RenderBox;
+                      tableSize.value = box.size.width;
+                    });
+                    return ValueListenableBuilder<double?>(
+                      valueListenable: tableSize,
+                      child: table,
+                      builder: (context, width, child) {
+                        if (width == null) {
+                          return AnimatedOpacity(
+                            child: table,
+                            opacity: 0.0,
+                            duration: Duration.zero,
+                          );
+                        }
+
+                        if (width < context.screenSize.width) {
+                          return SizedBox(
+                            child: table,
+                            width: getTableWidth,
+                          );
+                        }
+                        return table;
+                      },
+                    );
+                  },
                 ),
               ),
               if (isEmpty) _buildNoDataWidget(),

@@ -17,8 +17,8 @@ class MenuController extends ChangeNotifier {
   set menuIndex(int menuIndex) {
     _menuIndex = menuIndex;
     notifyListeners();
-    if (pageController?.hasClients ?? false) {
-      pageController!.jumpToPage(_menuIndex);
-    }
+    // if (pageController?.hasClients ?? false) {
+    //   pageController!.jumpToPage(_menuIndex);
+    // }
   }
 }

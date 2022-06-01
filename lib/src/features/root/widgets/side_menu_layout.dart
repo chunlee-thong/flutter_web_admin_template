@@ -11,27 +11,31 @@ const selected = Color(0xFF10B981);
 class SideMenuLayout extends StatelessWidget {
   const SideMenuLayout({Key? key}) : super(key: key);
 
+  static const double width = 260;
+
   @override
   Widget build(BuildContext context) {
     return Material(
       color: const Color(0xFF111827),
-      child: ListTileTheme(
-        data: const ListTileThemeData(
-          iconColor: unselected,
-          textColor: unselected,
-          selectedColor: selected,
-          selectedTileColor: Colors.white10,
-        ),
-        child: Container(
-          width: 260,
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildCompanyInfo(),
-              const Divider(color: Colors.white, thickness: 0.2),
-              const _MenuList(),
-            ],
+      child: SafeArea(
+        child: ListTileTheme(
+          data: const ListTileThemeData(
+            iconColor: unselected,
+            textColor: unselected,
+            selectedColor: selected,
+            selectedTileColor: Colors.white10,
+          ),
+          child: Container(
+            width: width,
+            padding: EdgeInsets.only(top: SuraResponsive.value(4, 16)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildCompanyInfo(),
+                const Divider(color: Colors.white, thickness: 0.2),
+                const _MenuList(),
+              ],
+            ),
           ),
         ),
       ),

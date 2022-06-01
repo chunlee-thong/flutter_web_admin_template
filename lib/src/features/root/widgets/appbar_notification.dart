@@ -33,7 +33,7 @@ class AppBarNotification extends StatelessWidget {
               PopupMenuItem(
                 enabled: false,
                 child: SizedBox(
-                  child: Center(child: Text("7 New Notifications", style: kSubtitleStyle.black)),
+                  child: Center(child: Text("3 New Notifications", style: kSubtitleStyle.black)),
                   width: 400,
                 ),
               ),

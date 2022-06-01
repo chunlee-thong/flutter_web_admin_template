@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_admin_template/src/app/provider/index.dart';
@@ -6,6 +7,8 @@ import 'package:flutter_web_admin_template/src/app/router/main_router.dart';
 import 'package:flutter_web_admin_template/src/features/crm/message/message_page.dart';
 import 'package:flutter_web_admin_template/src/features/customer/customer_page.dart';
 import 'package:flutter_web_admin_template/src/features/inventory/inventory_page.dart';
+import 'package:flutter_web_admin_template/src/features/product-detail/product_detail_page.dart';
+import 'package:flutter_web_admin_template/src/shared/widgets/container/body_layout_container.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sura_flutter/sura_flutter.dart';
 
@@ -15,38 +18,46 @@ import 'widgets/appbar_language.dart';
 import 'widgets/appbar_notification.dart';
 import 'widgets/side_menu_layout.dart';
 
+const double kMenuBreakpoint = 800;
+
 class RootPage extends StatefulWidget {
-  final String pageKey;
-  const RootPage({Key? key, this.pageKey = AppRoutes.dashboard}) : super(key: key);
+  final String mainPageKey;
+  final AppRoute? subroute;
+  const RootPage({Key? key, this.mainPageKey = AppRoutes.dashboard, this.subroute}) : super(key: key);
 
   @override
   State<RootPage> createState() => _RootPageState();
-
-  static const Map<String, Widget> pages = {
-    AppRoutes.dashboard: DashboardPage(),
-    AppRoutes.inventory: InventoryPage(),
-    AppRoutes.customer: CustomerPage(),
-    AppRoutes.setting: Text("Setting"),
-    AppRoutes.report: Text("Report"),
-    AppRoutes.admin: Text("Admin"),
-    AppRoutes.message: MessagePage(),
-    AppRoutes.request: Text("Request"),
-  };
 }
 
 class _RootPageState extends State<RootPage> {
   late PageController pageController;
   late MenuController menuController = readProvider<MenuController>(context);
 
-  void initPage() {
-    int index = RootPage.pages.keys.toList().indexOf(widget.pageKey);
-    pageController = PageController(initialPage: index);
+  Map<String, Widget> get pages => {
+        AppRoutes.dashboard: const DashboardPage(),
+        AppRoutes.inventory: const InventoryPage(),
+        AppRoutes.customer: const CustomerPage(),
+        AppRoutes.setting: const Text("Setting"),
+        AppRoutes.report: const Text("Report"),
+        AppRoutes.admin: const Text("Admin"),
+        AppRoutes.message: const MessagePage(),
+        AppRoutes.request: const Text("Request"),
+        AppRoutes.productDetail: ProductDetailPage(
+          productId: int.parse(widget.subroute?.param ?? "0"),
+        ),
+      };
+
+  void initSideMenuIndex() {
+    int menuIndex =
+        widget.subroute?.index != null ? widget.subroute!.index! : pages.keys.toList().indexOf(widget.mainPageKey);
+    pageController = PageController(initialPage: menuIndex);
     menuController.setController(pageController);
   }
 
   @override
   void initState() {
-    initPage();
+    infoLog("root page init");
+    initSideMenuIndex();
     super.initState();
   }
 
@@ -63,12 +74,15 @@ class _RootPageState extends State<RootPage> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setApplicationSwitcherDescription(ApplicationSwitcherDescription(
-      label: getTitle,
-    ));
+    infoLog("Rebuild", DateTime.now().millisecondsSinceEpoch);
+    if (kIsWeb) {
+      SystemChrome.setApplicationSwitcherDescription(ApplicationSwitcherDescription(
+        label: getTitle,
+      ));
+    }
     return LayoutBuilder(
       builder: (context, constraint) {
-        final isBigScreen = constraint.maxWidth > 800;
+        final isBigScreen = constraint.maxWidth > kMenuBreakpoint;
         return Row(
           children: [
             if (isBigScreen) const SideMenuLayout(),
@@ -87,8 +101,11 @@ class _RootPageState extends State<RootPage> {
                     return PageView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       controller: pageController,
-                      itemBuilder: (context, index) => RootPage.pages[widget.pageKey] ?? emptySizedBox,
-                      itemCount: RootPage.pages.keys.length,
+                      itemBuilder: (context, index) {
+                        Widget child = pages[widget.mainPageKey] ?? emptySizedBox;
+                        return BodyLayoutContainer(child: child);
+                      },
+                      itemCount: pages.keys.length,
                     );
                   },
                 ),

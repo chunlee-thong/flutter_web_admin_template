@@ -7,6 +7,7 @@ class AppRoutes {
   static const report = "/home/report";
   static const message = "/home/message";
   static const request = "/home/request";
+  static const productDetail = "/home/product";
   //
   static const login = "/login";
 }
@@ -20,9 +21,25 @@ const List<String> kAuthenticatedRoutes = [
   AppRoutes.report,
   AppRoutes.message,
   AppRoutes.request,
+  AppRoutes.productDetail,
 ];
 
 //
 const List<String> kUnauthenticatedRoutes = [
   AppRoutes.login,
 ];
+
+abstract class AppRoute {
+  int? get index;
+  String get param;
+}
+
+class ProductDetailRoute implements AppRoute {
+  final String productId;
+  ProductDetailRoute(this.productId);
+  @override
+  int? get index => 1;
+
+  @override
+  String get param => productId;
+}

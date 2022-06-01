@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_admin_template/src/features/customer/data/customer_model.dart';
 import 'package:flutter_web_admin_template/src/shared/widgets/common/tag.dart';
-import 'package:flutter_web_admin_template/src/shared/widgets/container/body_layout_container.dart';
 import 'package:sura_flutter/sura_flutter.dart';
 import 'package:sura_manager/sura_manager.dart';
 
@@ -43,6 +42,7 @@ class _CustomerPageState extends State<CustomerPage> with AutomaticKeepAliveClie
 
   @override
   void initState() {
+    infoLog("double render");
     fetchData();
     super.initState();
   }
@@ -57,52 +57,64 @@ class _CustomerPageState extends State<CustomerPage> with AutomaticKeepAliveClie
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return BodyLayoutContainer(
-      child: FutureManagerBuilder<List<CustomerModel>>(
-        futureManager: customerManager,
-        ready: (context, customers) {
-          return MyCustomDataTable<CustomerModel>(
-            data: customers,
-            isLoading: customerManager.isRefreshing,
-            onEdit: (data) async {},
-            pager: PaginationPager(
-              currentPage: page,
-              totalPage: total ~/ limit,
-              onChanged: (page) {
-                this.page = page;
-                fetchData();
-              },
-            ),
-            headingRowHeight: 64,
-            dataRowHeight: 64,
-            columns: const [
-              "Profile",
-              'Name',
-              "Email",
-              "Role",
-            ],
-            rows: [
-              for (var customer in customers)
-                DataRow(
-                  cells: [
-                    DataCell(CircleAvatar(
-                      radius: 25,
-                      backgroundImage: NetworkImage(
-                        SuraUtils.unsplashImage(
-                          category: "person",
-                          width: 201 + customers.indexOf(customer),
-                        ),
+    return FutureManagerBuilder<List<CustomerModel>>(
+      futureManager: customerManager,
+      ready: (context, customers) {
+        return MyCustomDataTable<CustomerModel>(
+          data: customers,
+          isLoading: customerManager.isRefreshing,
+          onEdit: (data) async {},
+          pager: PaginationPager(
+            currentPage: page,
+            totalPage: total ~/ limit,
+            onChanged: (page) {
+              this.page = page;
+              fetchData();
+            },
+          ),
+          headingRowHeight: 64,
+          dataRowHeight: 64,
+          columns: const [
+            "Profile",
+            'Name',
+            "Email",
+            "Role",
+            //
+            "Role",
+            "Role",
+            "Role",
+            "Role",
+            "Role",
+            "Role",
+          ],
+          rows: [
+            for (var customer in customers)
+              DataRow(
+                cells: [
+                  DataCell(CircleAvatar(
+                    radius: 25,
+                    backgroundImage: NetworkImage(
+                      SuraUtils.unsplashImage(
+                        category: "person",
+                        width: 201 + customers.indexOf(customer),
                       ),
-                    )),
-                    DataCell(Text("${customer.firstName} ${customer.lastName}")),
-                    DataCell(Text(customer.email)),
-                    DataCell(Tag(text: customer.role.toUpperCase())),
-                  ],
-                )
-            ],
-          );
-        },
-      ),
+                    ),
+                  )),
+                  DataCell(Text("${customer.firstName} ${customer.lastName}")),
+                  DataCell(Text(customer.email)),
+                  DataCell(Tag(text: customer.role.toUpperCase())),
+                  //
+                  DataCell(Tag(text: customer.role.toUpperCase())),
+                  DataCell(Tag(text: customer.role.toUpperCase())),
+                  DataCell(Tag(text: customer.role.toUpperCase())),
+                  DataCell(Tag(text: customer.role.toUpperCase())),
+                  DataCell(Tag(text: customer.role.toUpperCase())),
+                  DataCell(Tag(text: customer.role.toUpperCase())),
+                ],
+              )
+          ],
+        );
+      },
     );
   }
 
