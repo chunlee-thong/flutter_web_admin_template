@@ -23,7 +23,7 @@ abstract class DashboardCardContainer extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.grey.shade200,
-            blurRadius: 4,
+            blurRadius: 20,
             spreadRadius: 2,
           )
         ],

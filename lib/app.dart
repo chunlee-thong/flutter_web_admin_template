@@ -3,6 +3,7 @@ import 'package:flutter_web_admin_template/src/app/constant/app_theme_color.dart
 import 'package:flutter_web_admin_template/src/app/provider/auth_provider.dart';
 import 'package:flutter_web_admin_template/src/app/provider/menu_controller.dart';
 import 'package:flutter_web_admin_template/src/app/router/main_router.dart';
+import 'package:flutter_web_admin_template/src/features/register/register_page.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,12 @@ class AdminDashboardApp extends StatelessWidget {
           path: AppRoutes.login,
           builder: (context, state) {
             return const LoginPage();
+          },
+        ),
+        GoRoute(
+          path: AppRoutes.register,
+          builder: (context, state) {
+            return const RegisterPage();
           },
         ),
         GoRoute(

@@ -16,7 +16,7 @@ class CustomerPage extends StatefulWidget {
 }
 
 class _CustomerPageState extends State<CustomerPage> with AutomaticKeepAliveClientMixin {
-  FutureManager<List<CustomerModel>> customerManager = FutureManager();
+  FutureManager<List<CustomerModel>> customerManager = FutureManager(reloading: false);
   final ScrollController scrollController = ScrollController();
 
   int total = 0;
@@ -42,7 +42,6 @@ class _CustomerPageState extends State<CustomerPage> with AutomaticKeepAliveClie
 
   @override
   void initState() {
-    infoLog("double render");
     fetchData();
     super.initState();
   }
@@ -62,6 +61,11 @@ class _CustomerPageState extends State<CustomerPage> with AutomaticKeepAliveClie
       ready: (context, customers) {
         return MyCustomDataTable<CustomerModel>(
           data: customers,
+          refreshButton: ElevatedButton.icon(
+            onPressed: () => customerManager.refresh(),
+            icon: const Icon(Icons.refresh),
+            label: const Text("Refresh"),
+          ),
           isLoading: customerManager.isRefreshing,
           onEdit: (data) async {},
           pager: PaginationPager(

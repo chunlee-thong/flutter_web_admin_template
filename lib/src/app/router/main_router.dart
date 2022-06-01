@@ -10,6 +10,7 @@ class AppRoutes {
   static const productDetail = "/home/product";
   //
   static const login = "/login";
+  static const register = "/register";
 }
 
 const List<String> kAuthenticatedRoutes = [
@@ -27,11 +28,12 @@ const List<String> kAuthenticatedRoutes = [
 //
 const List<String> kUnauthenticatedRoutes = [
   AppRoutes.login,
+  AppRoutes.register,
 ];
 
 abstract class AppRoute {
   int? get index;
-  String get param;
+  String? get param;
 }
 
 class ProductDetailRoute implements AppRoute {
@@ -41,5 +43,5 @@ class ProductDetailRoute implements AppRoute {
   int? get index => 1;
 
   @override
-  String get param => productId;
+  String? get param => productId;
 }

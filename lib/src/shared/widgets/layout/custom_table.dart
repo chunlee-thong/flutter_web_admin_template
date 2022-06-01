@@ -19,6 +19,7 @@ class MyCustomDataTable<T extends Object> extends StatefulWidget {
   final FutureOr<void> Function(T)? onView;
   final FutureOr<void> Function(T)? onDelete;
   final Widget? createButton;
+  final Widget? refreshButton;
   const MyCustomDataTable({
     Key? key,
     required this.columns,
@@ -32,6 +33,7 @@ class MyCustomDataTable<T extends Object> extends StatefulWidget {
     this.onView,
     this.onDelete,
     this.createButton,
+    this.refreshButton,
   }) : super(key: key);
 
   @override
@@ -246,6 +248,8 @@ class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<
     return Row(
       children: [
         if (widget.createButton != null) widget.createButton!,
+        const SpaceX(),
+        if (widget.refreshButton != null) widget.refreshButton!,
       ],
     );
   }

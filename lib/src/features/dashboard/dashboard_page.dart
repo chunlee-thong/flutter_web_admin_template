@@ -7,7 +7,6 @@ import 'widgets/budget_card.dart';
 import 'widgets/task_progress_card.dart';
 import 'widgets/total_customer_card.dart';
 import 'widgets/total_profit.dart';
-import 'widgets/weekly_sales_chart.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -28,7 +27,7 @@ class _DashboardPageState extends State<DashboardPage> {
         children: [
           _buildCardSummary(),
           const SpaceY(24),
-          const WeeklySaleChart(),
+          // const WeeklySaleChart(),
         ],
       ),
     );

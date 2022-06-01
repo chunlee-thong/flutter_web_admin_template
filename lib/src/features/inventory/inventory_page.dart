@@ -36,6 +36,17 @@ class _InventoryPageState extends State<InventoryPage> {
     return productListManager.when(
       ready: (products) => MyCustomDataTable<DummyProduct>(
         columns: const ["ID", "Product name", "Quantity", "Price"],
+        rows: [
+          for (var product in products)
+            DataRow(
+              cells: [
+                DataCell(Text("${product.id}")),
+                DataCell(Text(product.name)),
+                DataCell(Text("${product.quantity}")),
+                DataCell(Text("${product.price}")),
+              ],
+            ),
+        ],
         onEdit: (data) async {
           showDialog(context: context, builder: (c) => AddEditProductDialog(product: data));
         },
@@ -53,17 +64,6 @@ class _InventoryPageState extends State<InventoryPage> {
           icon: const Icon(Icons.add),
           label: const Text("Create"),
         ),
-        rows: [
-          for (var product in products)
-            DataRow(
-              cells: [
-                DataCell(Text("${product.id}")),
-                DataCell(Text(product.name)),
-                DataCell(Text("${product.quantity}")),
-                DataCell(Text("${product.price}")),
-              ],
-            ),
-        ],
         dataRowHeight: 64,
         headingRowHeight: 64,
         isLoading: false,

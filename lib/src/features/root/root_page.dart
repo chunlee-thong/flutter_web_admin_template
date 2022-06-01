@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_web_admin_template/src/app/provider/index.dart';
 import 'package:flutter_web_admin_template/src/app/provider/menu_controller.dart';
 import 'package:flutter_web_admin_template/src/app/router/main_router.dart';
-import 'package:flutter_web_admin_template/src/features/crm/message/message_page.dart';
 import 'package:flutter_web_admin_template/src/features/customer/customer_page.dart';
 import 'package:flutter_web_admin_template/src/features/inventory/inventory_page.dart';
 import 'package:flutter_web_admin_template/src/features/product-detail/product_detail_page.dart';
@@ -13,6 +12,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sura_flutter/sura_flutter.dart';
 
 import '../dashboard/dashboard_page.dart';
+import '../message/message_page.dart';
 import 'widgets/appbar_avatar.dart';
 import 'widgets/appbar_language.dart';
 import 'widgets/appbar_notification.dart';
@@ -74,7 +74,6 @@ class _RootPageState extends State<RootPage> {
 
   @override
   Widget build(BuildContext context) {
-    infoLog("Rebuild", DateTime.now().millisecondsSinceEpoch);
     if (kIsWeb) {
       SystemChrome.setApplicationSwitcherDescription(ApplicationSwitcherDescription(
         label: getTitle,

@@ -83,6 +83,8 @@ class _LoginPageState extends State<LoginPage> with SuraFormMixin {
                     onPressed: onSignIn,
                     child: const Text("LOGIN"),
                   ),
+                  const SpaceY(24),
+                  _buildFooter(),
                   const SpaceY(32),
                 ],
               ),
@@ -90,6 +92,21 @@ class _LoginPageState extends State<LoginPage> with SuraFormMixin {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildFooter() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text("Doesn't have an account?"),
+        TextButton(
+          onPressed: () {
+            context.push(AppRoutes.register);
+          },
+          child: const Text("Sign up"),
+        ),
+      ],
     );
   }
 }
