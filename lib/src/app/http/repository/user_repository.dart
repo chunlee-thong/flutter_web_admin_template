@@ -20,7 +20,7 @@ class UserRepository extends API {
         "password": password,
       },
       onSuccess: (response) {
-        return AuthResponse.fromJson(response.data[DATA_FIELD]);
+        return AuthResponse.fromJson(response.data[kDataField]);
       },
     );
   }
@@ -46,7 +46,7 @@ class UserRepository extends API {
     return httpRequest(
       path: _getUserInfo + userId,
       onSuccess: (response) {
-        return UserModel.fromJson(response.data[DATA_FIELD]);
+        return UserModel.fromJson(response.data[kDataField]);
       },
     );
   }

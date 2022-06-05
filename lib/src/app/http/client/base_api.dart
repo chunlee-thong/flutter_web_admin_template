@@ -8,10 +8,10 @@ import 'http_client.dart';
 import 'http_exception.dart';
 
 ///Data field from api response
-const String DATA_FIELD = "data";
+const String kDataField = "data";
 
-///Data field from api response
-const String MESSAGE_FIELD = "message";
+///Message field from api response
+const String kMessageField = "message";
 
 class API {
   late final Dio dio;

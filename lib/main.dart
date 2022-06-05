@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_admin_template/app.dart';
 import 'package:flutter_web_admin_template/src/app/http/repository/index.dart';
 import 'package:flutter_web_admin_template/src/app/provider/auth_provider.dart';
@@ -12,7 +13,7 @@ void main() async {
   if (kIsWeb) {
     GoRouter.setUrlPathStrategy(UrlPathStrategy.path);
   }
-  runApp(AdminDashboardApp());
+  runApp(ProviderScope(child: AdminDashboardApp()));
   // return;
   // runZonedGuarded(() async {
   //   await Sentry.init(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_admin_template/src/app/router/main_router.dart';
 import 'package:flutter_web_admin_template/src/features/inventory/data/product_model.dart';
 import 'package:flutter_web_admin_template/src/shared/widgets/layout/custom_table.dart';
@@ -8,31 +9,47 @@ import 'package:sura_manager/sura_manager.dart';
 
 import 'widgets/add_product_dialog.dart';
 
-final FutureManager<List<DummyProduct>> productListManager = FutureManager(
-  reloading: false,
-  cacheOption: const ManagerCacheOption(cacheTime: Duration(minutes: 1)),
-  futureFunction: () async {
-    await SuraUtils.wait(500);
-    return Future.value(kProductList);
+// final FutureManager<List<DummyProduct>> productListManager = FutureManager(
+//   reloading: false,
+//   cacheOption: const ManagerCacheOption(cacheTime: Duration(minutes: 1)),
+//   futureFunction: () async {
+//     await SuraUtils.wait(500);
+//     return Future.value(kProductList);
+//   },
+// );
+
+final productListProvider = Provider<FutureManager<List<DummyProduct>>>(
+  (ref) {
+    final FutureManager<List<DummyProduct>> productListManager = FutureManager(
+      reloading: false,
+      futureFunction: () async {
+        await SuraUtils.wait(500);
+        return Future.value(kProductList);
+      },
+    );
+
+    return productListManager;
   },
 );
 
-class InventoryPage extends StatefulWidget {
+class InventoryPage extends ConsumerStatefulWidget {
   const InventoryPage({Key? key}) : super(key: key);
 
   @override
-  State<InventoryPage> createState() => _InventoryPageState();
+  ConsumerState<InventoryPage> createState() => _InventoryPageState();
 }
 
-class _InventoryPageState extends State<InventoryPage> {
+class _InventoryPageState extends ConsumerState<InventoryPage> {
+  late final productListManager = ref.watch(productListProvider);
+
   @override
   void initState() {
-    productListManager.refresh();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    infoLog("rebuild inventory");
     return productListManager.when(
       ready: (products) => MyCustomDataTable<DummyProduct>(
         columns: const ["ID", "Product name", "Quantity", "Price"],
@@ -55,7 +72,7 @@ class _InventoryPageState extends State<InventoryPage> {
           productListManager.updateData(kProductList);
         },
         onView: (data) {
-          context.go("${AppRoutes.productDetail}/${data.id}");
+          context.push("${AppRoutes.productDetail}/${data.id}");
         },
         createButton: ElevatedButton.icon(
           onPressed: () {

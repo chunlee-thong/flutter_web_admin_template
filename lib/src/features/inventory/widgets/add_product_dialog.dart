@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_admin_template/src/app/constant/app_style_decoration.dart';
 import 'package:flutter_web_admin_template/src/features/inventory/data/product_model.dart';
-import 'package:flutter_web_admin_template/src/features/inventory/inventory_page.dart';
 import 'package:sura_flutter/sura_flutter.dart';
 
-class AddEditProductDialog extends StatefulWidget {
+import '../inventory_page.dart';
+
+class AddEditProductDialog extends ConsumerStatefulWidget {
   final DummyProduct? product;
   const AddEditProductDialog({Key? key, this.product}) : super(key: key);
 
   @override
-  State<AddEditProductDialog> createState() => _AddEditProductDialogState();
+  ConsumerState<AddEditProductDialog> createState() => _AddEditProductDialogState();
 }
 
-class _AddEditProductDialogState extends State<AddEditProductDialog> {
+class _AddEditProductDialogState extends ConsumerState<AddEditProductDialog> {
   late final bool isEdit = widget.product != null;
   late TextEditingController nameTC, noTC, qtyTC, priceTC;
+
+  late final productListManager = ref.read(productListProvider);
 
   @override
   void initState() {
