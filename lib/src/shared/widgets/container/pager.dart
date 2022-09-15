@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sura_flutter/sura_flutter.dart';
+import 'package:skadi/skadi.dart';
 
 class PaginationPager extends StatelessWidget {
   final int totalPage;
@@ -23,9 +23,11 @@ class PaginationPager extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           IconButton(
-            onPressed: () {
-              onChanged(currentPage - 1);
-            },
+            onPressed: currentPage > 1
+                ? () {
+                    onChanged(currentPage - 1);
+                  }
+                : null,
             icon: const Icon(Icons.arrow_back_ios, size: size),
           ),
           if (totalPage > 6) ...[
@@ -50,9 +52,11 @@ class PaginationPager extends StatelessWidget {
             for (var i in [1, 2, 3, 4, 5, 6]) _buildPageWrapper(i),
           ],
           IconButton(
-            onPressed: () {
-              onChanged(currentPage + 1);
-            },
+            onPressed: currentPage < totalPage
+                ? () {
+                    onChanged(currentPage + 1);
+                  }
+                : null,
             icon: const Icon(Icons.arrow_forward_ios, size: size),
           ),
         ],
@@ -73,11 +77,14 @@ class PaginationPager extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 2),
         decoration: BoxDecoration(
           color: selected ? Colors.blue : null,
-          borderRadius: SuraDecoration.radius(32),
+          borderRadius: SkadiDecoration.radius(32),
         ),
         alignment: Alignment.center,
         padding: const EdgeInsets.all(8.0),
-        child: Text("$page").textColor(selected ? Colors.white : Colors.black),
+        child: Text(
+          "$page",
+          style: TextStyle(color: selected ? Colors.white : Colors.black),
+        ),
       ),
     );
   }

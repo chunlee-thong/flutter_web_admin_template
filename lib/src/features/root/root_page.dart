@@ -1,15 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_web_admin_template/src/app/provider/index.dart';
-import 'package:flutter_web_admin_template/src/app/provider/menu_controller.dart';
-import 'package:flutter_web_admin_template/src/app/router/main_router.dart';
+import 'package:flutter_web_admin_template/src/core/provider/index.dart';
+import 'package:flutter_web_admin_template/src/core/provider/menu_controller.dart';
+import 'package:flutter_web_admin_template/src/core/router/main_router.dart';
 import 'package:flutter_web_admin_template/src/features/customer/customer_page.dart';
 import 'package:flutter_web_admin_template/src/features/inventory/inventory_page.dart';
 import 'package:flutter_web_admin_template/src/features/product-detail/product_detail_page.dart';
 import 'package:flutter_web_admin_template/src/shared/widgets/container/body_layout_container.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sura_flutter/sura_flutter.dart';
+import 'package:skadi/skadi.dart';
 
 import '../dashboard/dashboard_page.dart';
 import '../message/message_page.dart';
@@ -69,7 +69,7 @@ class _RootPageState extends State<RootPage> {
 
   String get getTitle {
     String current = GoRouter.of(context).location.split("/").last;
-    return "Web Admin | ${current.replaceFirst('/', '').capitalize()}";
+    return "Web Admin | ${current.replaceFirst('/', '').capitalize}";
   }
 
   @override

@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_web_admin_template/src/app/constant/app_style_decoration.dart';
+import 'package:flutter_web_admin_template/src/core/constant/app_style_decoration.dart';
 import 'package:flutter_web_admin_template/src/features/root/root_page.dart';
 import 'package:flutter_web_admin_template/src/features/root/widgets/side_menu_layout.dart';
 import 'package:flutter_web_admin_template/src/shared/widgets/container/pager.dart';
-import 'package:sura_flutter/sura_flutter.dart';
+import 'package:skadi/skadi.dart';
 
 class MyCustomDataTable<T extends Object> extends StatefulWidget {
   final List<String> columns;
@@ -55,9 +55,9 @@ class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<
 
   double get getTableWidth {
     double somePadding = 32 + actionPaneWidth;
-    double screen = MediaQuery.of(context).size.width;
-    bool hasSideMenu = screen > kMenuBreakpoint;
-    return (hasSideMenu ? (screen - SideMenuLayout.width) : screen) - somePadding;
+    double screenWidth = MediaQuery.of(context).size.width;
+    bool hasSideMenu = screenWidth > kMenuBreakpoint;
+    return (hasSideMenu ? (screenWidth - SideMenuLayout.width) : screenWidth) - somePadding;
   }
 
   @override
@@ -94,7 +94,7 @@ class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<
         const SpaceY(16),
         Scrollbar(
           controller: scrollController,
-          isAlwaysShown: true,
+          thumbVisibility: true,
           scrollbarOrientation: ScrollbarOrientation.bottom,
           child: Stack(
             children: [
@@ -107,10 +107,13 @@ class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<
                 scrollDirection: Axis.horizontal,
                 child: LayoutBuilder(
                   builder: (context, constraint) {
-                    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-                      RenderBox box = tableKey.currentContext!.findRenderObject() as RenderBox;
-                      tableSize.value = box.size.width;
-                    });
+                    if (tableSize.value == null) {
+                      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                        RenderBox box = tableKey.currentContext!.findRenderObject() as RenderBox;
+                        tableSize.value = box.size.width;
+                      });
+                    }
+
                     return ValueListenableBuilder<double?>(
                       valueListenable: tableSize,
                       child: table,
@@ -151,7 +154,10 @@ class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<
                           height: widget.headingRowHeight,
                           child: const Center(child: Text("Action", style: headerStyle)),
                         ),
-                        const Divider(height: 0),
+                        const Divider(
+                          thickness: 0.2,
+                          height: 0.5,
+                        ),
                         for (var index in _dummyRowList)
                           SizedBox(
                             height: widget.dataRowHeight,
@@ -199,7 +205,7 @@ class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<
             },
           ),
         ),
-        if (rowIndex != _dummyRowList.last) const Divider(height: 0),
+        if (rowIndex != _dummyRowList.last) const Divider(height: 0, thickness: 0.2),
       ],
     );
   }

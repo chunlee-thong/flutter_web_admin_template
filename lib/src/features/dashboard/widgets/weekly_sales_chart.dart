@@ -1,8 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_web_admin_template/src/app/constant/app_style_decoration.dart';
+import 'package:flutter_web_admin_template/src/core/constant/app_style_decoration.dart';
 import 'package:flutter_web_admin_template/src/features/dashboard/widgets/dashboard_card_container.dart';
-import 'package:sura_flutter/sura_flutter.dart';
+import 'package:skadi/skadi.dart';
 
 class WeeklySaleChart extends StatelessWidget {
   const WeeklySaleChart({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class WeeklySaleChart extends StatelessWidget {
           child: Card(
             margin: const EdgeInsets.only(right: 8),
             elevation: 1.5,
-            shape: SuraDecoration.roundRect(8),
+            shape: SkadiDecoration.roundRect(8),
             child: Padding(
               padding: const EdgeInsets.all(24.0),
               child: Column(

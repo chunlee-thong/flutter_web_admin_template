@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sura_flutter/sura_flutter.dart';
+import 'package:skadi/skadi.dart';
 
 class BodyLayoutContainer extends StatelessWidget {
   final Widget child;
@@ -10,7 +10,7 @@ class BodyLayoutContainer extends StatelessWidget {
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Padding(
-        padding: EdgeInsets.all(SuraResponsive.value(16, 24, 32)),
+        padding: EdgeInsets.all(SkadiResponsive.value(16, 24, 32)),
         child: child,
       ),
     );

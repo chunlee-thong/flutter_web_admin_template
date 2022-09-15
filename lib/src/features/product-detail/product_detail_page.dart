@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web_admin_template/src/app/constant/app_theme_color.dart';
+import 'package:flutter_web_admin_template/src/core/constant/app_theme_color.dart';
 import 'package:flutter_web_admin_template/src/features/inventory/data/product_model.dart';
 
 import '../inventory/inventory_page.dart';

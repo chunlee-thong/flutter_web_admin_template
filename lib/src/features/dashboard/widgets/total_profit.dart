@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_admin_template/src/features/dashboard/widgets/dashboard_card_container.dart';
-import 'package:sura_flutter/sura_flutter.dart';
+import 'package:skadi/skadi.dart';
 
 class TotalProfitCard extends DashboardCardContainer {
   const TotalProfitCard({Key? key}) : super(key: key);

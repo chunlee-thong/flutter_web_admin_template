@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_web_admin_template/src/app/provider/auth_provider.dart';
-import 'package:flutter_web_admin_template/src/app/router/main_router.dart';
+import 'package:flutter_web_admin_template/src/core/provider/auth_provider.dart';
+import 'package:flutter_web_admin_template/src/core/router/main_router.dart';
 import 'package:flutter_web_admin_template/src/shared/widgets/common/app_logo.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sura_flutter/sura_flutter.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:skadi/skadi.dart' hide SkadiContextX;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with SuraFormMixin {
+class _LoginPageState extends State<LoginPage> with SkadiFormMixin {
   TextEditingController emailTC = TextEditingController(text: "admin@gmail.com");
   TextEditingController passwordTC = TextEditingController(text: "123456");
   AuthProvider authProvider = GetIt.I.get<AuthProvider>();
@@ -27,7 +28,7 @@ class _LoginPageState extends State<LoginPage> with SuraFormMixin {
       await authProvider.onSignIn(email, password);
       GoRouter.of(context).go(AppRoutes.dashboard);
     } catch (e) {
-      showSuraSimpleDialog(context, e.toString());
+      showToast(e.toString());
     }
   }
 
@@ -52,7 +53,7 @@ class _LoginPageState extends State<LoginPage> with SuraFormMixin {
               margin: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: SuraDecoration.radius(24),
+                borderRadius: SkadiDecoration.radius(24),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -77,7 +78,7 @@ class _LoginPageState extends State<LoginPage> with SuraFormMixin {
                     ),
                   ),
                   const SpaceY(24),
-                  SuraAsyncButton(
+                  SkadiAsyncButton(
                     height: 46,
                     margin: EdgeInsets.zero,
                     onPressed: onSignIn,

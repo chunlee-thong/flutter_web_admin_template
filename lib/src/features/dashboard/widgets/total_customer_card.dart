@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_admin_template/src/features/dashboard/widgets/dashboard_card_container.dart';
-import 'package:sura_flutter/sura_flutter.dart';
+import 'package:skadi/skadi.dart';
 
-import '../../../app/constant/app_style_decoration.dart';
+import '../../../core/constant/app_style_decoration.dart';
 
 class TotalCustomerCard extends DashboardCardContainer {
   const TotalCustomerCard({Key? key}) : super(key: key);

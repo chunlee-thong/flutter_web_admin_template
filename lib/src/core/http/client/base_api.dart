@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_web_admin_template/src/app/services/auth_service.dart';
-import 'package:sura_flutter/sura_flutter.dart';
+import 'package:flutter_web_admin_template/src/core/services/auth_service.dart';
+import 'package:skadi/skadi.dart';
 
 import 'http_client.dart';
 import 'http_exception.dart';
