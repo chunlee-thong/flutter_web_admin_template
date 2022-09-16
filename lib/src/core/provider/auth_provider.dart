@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web_admin_template/src/core/http/repository/index.dart';
 import 'package:flutter_web_admin_template/src/core/models/response/user/auth_response.dart';
 import 'package:flutter_web_admin_template/src/core/router/main_router.dart';
 import 'package:flutter_web_admin_template/src/core/services/auth_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../constant/repository/index.dart';
 
 class AuthProvider {
   AuthProvider(this.isLoggedIn);

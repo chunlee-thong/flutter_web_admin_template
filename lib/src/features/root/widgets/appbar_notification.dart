@@ -9,7 +9,7 @@ class AppBarNotification extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const popupDivider = PopupMenuItem<String>(
-      child: Divider(height: 12, color: Colors.red),
+      child: Divider(height: 12, color: Colors.grey),
       enabled: true,
       height: 4,
       padding: EdgeInsets.zero,

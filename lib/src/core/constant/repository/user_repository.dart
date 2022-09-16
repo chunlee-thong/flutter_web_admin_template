@@ -1,9 +1,7 @@
+import '../../http/index.dart';
 import '../../models/others/user_secret.dart';
 import '../../models/response/user/auth_response.dart';
 import '../../models/response/user/user_model.dart';
-import '../client/base_api.dart';
-import '../client/http_client.dart';
-import '../client/http_exception.dart';
 
 class UserRepository extends API {
   static const String _loginUser = "/user/login";

@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:skadi/skadi.dart';
 
-import '../../constant/app_config.dart';
+import '../constant/app_config.dart';
 
 class HttpMethod {
   HttpMethod._();
