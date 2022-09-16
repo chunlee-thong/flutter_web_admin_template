@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_admin_template/src/features/customer/data/customer_model.dart';
@@ -97,7 +99,12 @@ class _CustomerPageState extends State<CustomerPage> with AutomaticKeepAliveClie
                 cells: [
                   DataCell(CircleAvatar(
                     radius: 25,
-                    backgroundImage: NetworkImage(customer.profileImg),
+                    backgroundImage: NetworkImage(
+                      SkadiUtils.unsplashImage(
+                        category: "person",
+                        width: 200 + Random().nextInt(500),
+                      ),
+                    ),
                   )),
                   DataCell(Text("${customer.firstName} ${customer.lastName}")),
                   DataCell(Text(customer.email)),
