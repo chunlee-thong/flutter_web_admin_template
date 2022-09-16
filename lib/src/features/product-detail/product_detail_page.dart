@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web_admin_template/src/core/constant/app_theme_color.dart';
 import 'package:flutter_web_admin_template/src/features/inventory/data/product_model.dart';
 
 import '../inventory/inventory_page.dart';
@@ -23,15 +22,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     return productListManager.when(
       ready: (data) {
         late DummyProduct product = data.firstWhere((element) => element.id == widget.productId);
-        return Title(
-          title: product.name,
-          color: AppColor.primary,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("${widget.productId}"),
-            ],
-          ),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("${widget.productId}"),
+          ],
         );
       },
     );

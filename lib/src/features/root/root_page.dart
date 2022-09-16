@@ -22,7 +22,7 @@ const double kMenuBreakpoint = 800;
 
 class RootPage extends StatefulWidget {
   final String mainPageKey;
-  final AppRoute? subroute;
+  final AppSubRoute? subroute;
   const RootPage({Key? key, this.mainPageKey = AppRoutes.dashboard, this.subroute}) : super(key: key);
 
   @override
@@ -48,8 +48,9 @@ class _RootPageState extends State<RootPage> {
       };
 
   void initSideMenuIndex() {
-    int menuIndex =
-        widget.subroute?.index != null ? widget.subroute!.index! : pages.keys.toList().indexOf(widget.mainPageKey);
+    int menuIndex = widget.subroute?.sideMenuIndex != null
+        ? widget.subroute!.sideMenuIndex!
+        : pages.keys.toList().indexOf(widget.mainPageKey);
     pageController = PageController(initialPage: menuIndex);
     menuController.setController(pageController);
   }
@@ -69,7 +70,9 @@ class _RootPageState extends State<RootPage> {
 
   String get getTitle {
     String current = GoRouter.of(context).location.split("/").last;
-    return "Web Admin | ${current.replaceFirst('/', '').capitalize}";
+    String title = "Web Admin | ${current.replaceFirst('/', '').capitalize}";
+    infoLog("Get title:", title);
+    return title;
   }
 
   @override
