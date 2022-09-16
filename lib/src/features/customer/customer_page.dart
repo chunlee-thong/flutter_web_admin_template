@@ -97,12 +97,7 @@ class _CustomerPageState extends State<CustomerPage> with AutomaticKeepAliveClie
                 cells: [
                   DataCell(CircleAvatar(
                     radius: 25,
-                    backgroundImage: NetworkImage(
-                      SkadiUtils.unsplashImage(
-                        category: "person",
-                        width: 201 + customers.indexOf(customer),
-                      ),
-                    ),
+                    backgroundImage: NetworkImage(customer.profileImg),
                   )),
                   DataCell(Text("${customer.firstName} ${customer.lastName}")),
                   DataCell(Text(customer.email)),
