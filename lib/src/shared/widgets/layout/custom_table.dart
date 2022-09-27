@@ -94,7 +94,7 @@ class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<
         const SpaceY(16),
         Scrollbar(
           controller: scrollController,
-          isAlwaysShown: true,
+          thumbVisibility: true,
           scrollbarOrientation: ScrollbarOrientation.bottom,
           child: Stack(
             children: [
@@ -107,7 +107,7 @@ class _MyCustomDataTableState<T extends Object> extends State<MyCustomDataTable<
                 scrollDirection: Axis.horizontal,
                 child: LayoutBuilder(
                   builder: (context, constraint) {
-                    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+                    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                       RenderBox box = tableKey.currentContext!.findRenderObject() as RenderBox;
                       tableSize.value = box.size.width;
                     });
