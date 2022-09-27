@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web_admin_template/src/app/constant/app_style_decoration.dart';
+import 'package:flutter_web_admin_template/src/core/constant/app_style_decoration.dart';
 import 'package:flutter_web_admin_template/src/features/inventory/data/product_model.dart';
 import 'package:flutter_web_admin_template/src/features/inventory/inventory_page.dart';
-import 'package:sura_flutter/sura_flutter.dart';
+import 'package:skadi/skadi.dart';
 
 class AddEditProductDialog extends StatefulWidget {
   final DummyProduct? product;
@@ -65,9 +65,9 @@ class _AddEditProductDialogState extends State<AddEditProductDialog> {
               decoration: const InputDecoration(hintText: "Price"),
             ),
             const SpaceY(16),
-            SuraAsyncButton(
+            SkadiAsyncButton(
               onPressed: () async {
-                await SuraUtils.wait();
+                await SkadiUtils.wait();
                 final dummy = DummyProduct(
                   id: int.parse(noTC.text),
                   name: nameTC.text,

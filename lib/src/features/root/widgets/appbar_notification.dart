@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web_admin_template/src/app/constant/app_style_decoration.dart';
-import 'package:flutter_web_admin_template/src/app/models/others/notification_model.dart';
-import 'package:sura_flutter/sura_flutter.dart';
+import 'package:flutter_web_admin_template/src/core/constant/app_style_decoration.dart';
+import 'package:flutter_web_admin_template/src/core/models/others/notification_model.dart';
+import 'package:skadi/skadi.dart';
 
 class AppBarNotification extends StatelessWidget {
   const AppBarNotification({Key? key}) : super(key: key);
@@ -9,8 +9,8 @@ class AppBarNotification extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const popupDivider = PopupMenuItem<String>(
-      child: Divider0(),
-      enabled: false,
+      child: Divider(height: 12, color: Colors.grey),
+      enabled: true,
       height: 4,
       padding: EdgeInsets.zero,
     );
@@ -24,7 +24,7 @@ class AppBarNotification extends StatelessWidget {
           icon: const Icon(Icons.notifications_none),
           enableFeedback: true,
           shape: RoundedRectangleBorder(
-            borderRadius: SuraDecoration.radius(6),
+            borderRadius: SkadiDecoration.radius(6),
             side: const BorderSide(color: Colors.grey, width: 0.5),
           ),
           offset: const Offset(100.0, 50),
@@ -52,11 +52,11 @@ class AppBarNotification extends StatelessWidget {
             ];
           },
         ),
-        const Positioned(
-          child: SuraBadge(text: "3"),
-          right: 8,
-          top: 8,
-        ),
+        // const Positioned(
+        //   child: SkadiBadge(text: "3"),
+        //   right: 8,
+        //   top: 8,
+        // ),
       ],
     );
   }

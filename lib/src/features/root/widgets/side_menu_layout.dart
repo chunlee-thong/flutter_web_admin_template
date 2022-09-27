@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web_admin_template/src/app/provider/index.dart';
-import 'package:flutter_web_admin_template/src/app/provider/menu_controller.dart';
+import 'package:flutter_web_admin_template/src/core/provider/index.dart';
+import 'package:flutter_web_admin_template/src/core/provider/menu_controller.dart';
 import 'package:flutter_web_admin_template/src/features/root/data/menu_model.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sura_flutter/sura_flutter.dart';
+import 'package:skadi/skadi.dart';
 
 const unselected = Color(0xFF9CA3AF);
 const selected = Color(0xFF10B981);
@@ -27,7 +27,7 @@ class SideMenuLayout extends StatelessWidget {
           ),
           child: Container(
             width: width,
-            padding: EdgeInsets.only(top: SuraResponsive.value(4, 16)),
+            padding: EdgeInsets.only(top: SkadiResponsive.value(4, 16)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -50,14 +50,14 @@ class SideMenuLayout extends StatelessWidget {
         children: [
           CircleAvatar(
             backgroundImage: NetworkImage(
-              SuraUtils.unsplashImage(category: "logo"),
+              SkadiUtils.unsplashImage(category: "logo"),
             ),
           ),
           const SpaceY(24),
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              borderRadius: SuraDecoration.radius(8),
+              borderRadius: SkadiDecoration.radius(8),
               color: Colors.white10,
             ),
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -88,7 +88,7 @@ class _MenuList extends StatelessWidget {
   void onNavigate(BuildContext context, MenuModel menu) {
     readProvider<MenuController>(context).menuIndex = menu.index;
     context.go("/home/${menu.title.toLowerCase()}");
-    if (SuraResponsive.screenWidth <= 800) {
+    if (SkadiResponsive.screenWidth <= 800) {
       Navigator.pop(context);
     }
   }
@@ -109,7 +109,7 @@ class _MenuList extends StatelessWidget {
             collapsedIconColor: unselected,
             iconColor: unselected,
             title: ListTile(
-              shape: SuraDecoration.roundRect(),
+              shape: SkadiDecoration.roundRect(),
               leading: const Icon(Icons.menu),
               title: const Text("CRM"),
             ),

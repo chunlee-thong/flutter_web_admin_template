@@ -1,9 +1,11 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_admin_template/src/features/customer/data/customer_model.dart';
 import 'package:flutter_web_admin_template/src/shared/widgets/common/tag.dart';
-import 'package:sura_flutter/sura_flutter.dart';
-import 'package:sura_manager/sura_manager.dart';
+import 'package:future_manager/future_manager.dart';
+import 'package:skadi/skadi.dart';
 
 import '../../shared/widgets/container/pager.dart';
 import '../../shared/widgets/layout/custom_table.dart';
@@ -24,7 +26,7 @@ class _CustomerPageState extends State<CustomerPage> with AutomaticKeepAliveClie
   int limit = 10;
 
   Future fetchData() async {
-    customerManager.asyncOperation(
+    customerManager.execute(
       () async {
         var response = await Dio().get("https://express-boilerplate-dev.lynical.com/api/user/all", queryParameters: {
           "page": page,
@@ -32,7 +34,7 @@ class _CustomerPageState extends State<CustomerPage> with AutomaticKeepAliveClie
         });
         total = response.data['pagination']['total_items'];
         final list = response.data["data"] as List;
-        infoLog("Fetch data on page: $page, data: ${list.length}");
+        infoLog("Fetch data on page: $page, data: ${list.length}, Total: $total");
         List<CustomerModel> newData = list.map((e) => CustomerModel.fromJson(e)).toList();
         return newData;
       },
@@ -70,7 +72,7 @@ class _CustomerPageState extends State<CustomerPage> with AutomaticKeepAliveClie
           onEdit: (data) async {},
           pager: PaginationPager(
             currentPage: page,
-            totalPage: total ~/ limit,
+            totalPage: (total / limit).round(),
             onChanged: (page) {
               this.page = page;
               fetchData();
@@ -98,9 +100,9 @@ class _CustomerPageState extends State<CustomerPage> with AutomaticKeepAliveClie
                   DataCell(CircleAvatar(
                     radius: 25,
                     backgroundImage: NetworkImage(
-                      SuraUtils.unsplashImage(
+                      SkadiUtils.unsplashImage(
                         category: "person",
-                        width: 201 + customers.indexOf(customer),
+                        width: 200 + Random().nextInt(500),
                       ),
                     ),
                   )),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web_admin_template/src/app/router/main_router.dart';
+import 'package:flutter_web_admin_template/src/core/router/main_router.dart';
 import 'package:flutter_web_admin_template/src/features/inventory/data/product_model.dart';
 import 'package:flutter_web_admin_template/src/shared/widgets/layout/custom_table.dart';
+import 'package:future_manager/future_manager.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sura_flutter/sura_flutter.dart';
-import 'package:sura_manager/sura_manager.dart';
+import 'package:skadi/skadi.dart';
 
 import 'widgets/add_product_dialog.dart';
 
@@ -12,7 +12,7 @@ final FutureManager<List<DummyProduct>> productListManager = FutureManager(
   reloading: false,
   cacheOption: const ManagerCacheOption(cacheTime: Duration(minutes: 1)),
   futureFunction: () async {
-    await SuraUtils.wait(500);
+    await SkadiUtils.wait(500);
     return Future.value(kProductList);
   },
 );

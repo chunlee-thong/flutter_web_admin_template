@@ -31,16 +31,16 @@ const List<String> kUnauthenticatedRoutes = [
   AppRoutes.register,
 ];
 
-abstract class AppRoute {
-  int? get index;
+abstract class AppSubRoute {
+  int? get sideMenuIndex;
   String? get param;
 }
 
-class ProductDetailRoute implements AppRoute {
+class ProductDetailRoute implements AppSubRoute {
   final String productId;
   ProductDetailRoute(this.productId);
   @override
-  int? get index => 1;
+  int? get sideMenuIndex => 1;
 
   @override
   String? get param => productId;

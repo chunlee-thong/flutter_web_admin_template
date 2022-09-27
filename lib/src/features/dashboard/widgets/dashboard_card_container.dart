@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sura_flutter/sura_flutter.dart';
+import 'package:skadi/skadi.dart';
 
-import '../../../app/constant/app_style_decoration.dart';
-import '../../../app/constant/app_theme_color.dart';
+import '../../../core/constant/app_style_decoration.dart';
+import '../../../core/constant/app_theme_color.dart';
 
 TextStyle get dashboardCardTitleStyle {
   return kSubtitleStyle.bold.setColor(AppColor.grey1).copyWith(
@@ -19,7 +19,7 @@ abstract class DashboardCardContainer extends StatelessWidget {
       margin: EdgeInsets.zero,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: SuraDecoration.radius(8),
+        borderRadius: SkadiDecoration.radius(8),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.shade200,
@@ -48,7 +48,7 @@ abstract class DashboardCardContainer extends StatelessWidget {
                 ],
               ),
             ),
-            SuraIconButton(
+            SkadiIconButton(
               onTap: () {},
               backgroundColor: cardIcon.color,
               borderRadius: 32,

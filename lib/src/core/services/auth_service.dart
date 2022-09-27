@@ -1,4 +1,4 @@
-import 'package:flutter_web_admin_template/src/app/models/response/user/auth_response.dart';
+import 'package:flutter_web_admin_template/src/core/models/response/user/auth_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {

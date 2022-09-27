@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sura_flutter/sura_flutter.dart';
+import 'package:skadi/skadi.dart';
 
 class Tag extends StatelessWidget {
   final String text;
@@ -11,9 +11,9 @@ class Tag extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       decoration: BoxDecoration(
         color: Colors.green,
-        borderRadius: SuraDecoration.radius(8),
+        borderRadius: SkadiDecoration.radius(8),
       ),
-      child: Text(text).textColor(),
+      child: Text(text, style: const TextStyle(color: Colors.white)),
     );
   }
 }

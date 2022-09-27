@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:sura_flutter/sura_flutter.dart';
+import 'package:skadi/skadi.dart';
 
-import '../../../app/provider/auth_provider.dart';
+import '../../../core/provider/auth_provider.dart';
 
 class AppBarAvatar extends StatelessWidget {
   const AppBarAvatar({Key? key}) : super(key: key);
@@ -13,7 +13,7 @@ class AppBarAvatar extends StatelessWidget {
     return PopupMenuButton<int>(
       icon: CircleAvatar(
         backgroundImage: NetworkImage(
-          SuraUtils.unsplashImage(category: "person"),
+          SkadiUtils.unsplashImage(category: "person"),
         ),
       ),
       itemBuilder: (context) {
